@@ -93,13 +93,28 @@ export async function POST(req: Request) {
     // 이벤트 처리
     const eventType = evt.type;
     console.log("[Webhook] Processing event type:", eventType);
-    console.log("[Webhook] Event data:", {
-      id: evt.data?.id,
-      email: evt.data?.email_addresses?.[0]?.email_address,
-    });
+    
+    // 타입 안전한 로깅
+    if (eventType === "user.created" || eventType === "user.updated") {
+      const userData = evt.data as { id: string; email_addresses?: Array<{ email_address?: string }>; first_name?: string; last_name?: string };
+      console.log("[Webhook] Event data:", {
+        id: userData.id,
+        email: userData.email_addresses?.[0]?.email_address,
+      });
+    } else if (eventType === "user.deleted") {
+      const deletedData = evt.data as { id: string };
+      console.log("[Webhook] Event data:", {
+        id: deletedData.id,
+      });
+    } else {
+      console.log("[Webhook] Event data:", {
+        id: (evt.data as any)?.id,
+      });
+    }
 
     if (eventType === "user.created" || eventType === "user.updated") {
-      const { id, email_addresses, first_name, last_name } = evt.data;
+      const userData = evt.data as { id: string; email_addresses?: Array<{ email_address?: string }>; first_name?: string; last_name?: string };
+      const { id, email_addresses, first_name, last_name } = userData;
       console.log("[Webhook] Processing user:", { 
         id, 
         email: email_addresses[0]?.email_address,
@@ -175,7 +190,8 @@ export async function POST(req: Request) {
         );
       }
     } else if (eventType === "user.deleted") {
-      const { id } = evt.data;
+      const deletedData = evt.data as { id: string };
+      const { id } = deletedData;
       console.log("[Webhook] Processing user deletion:", { id });
 
       try {
