@@ -3,11 +3,17 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // POST: Process report action
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  // Handle both Promise and direct params (Next.js 14 compatibility)
+  const resolvedParams = await Promise.resolve(params);
+  const { id } = resolvedParams;
   try {
     // Verify admin permissions
     const { userId } = await requireAdmin();
@@ -36,7 +42,7 @@ export async function POST(
 
     // Fetch report
     const report = await prisma.report.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         post: true,
         comment: true,
@@ -110,7 +116,7 @@ export async function POST(
     }
 
     await prisma.report.update({
-      where: { id: params.id },
+      where: { id },
       data: { status: newStatus },
     });
 
@@ -119,7 +125,7 @@ export async function POST(
     if (needsAdminAction) {
       adminAction = await prisma.adminAction.create({
         data: {
-          reportId: params.id,
+          reportId: id,
           adminId: userId,
           actionType: actionType as any,
           description: description?.trim() || null,
