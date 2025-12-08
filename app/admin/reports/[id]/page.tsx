@@ -2,6 +2,9 @@ import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import ReportDetail from "@/components/admin/ReportDetail";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Report Detail | Admin",
   description: "Report details and actions",
@@ -10,10 +13,11 @@ export const metadata = {
 export default async function AdminReportDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   const report = await prisma.report.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
     include: {
       reporter: {
         select: {

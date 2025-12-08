@@ -6,6 +6,9 @@ import { prisma } from "@/lib/db";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 import TeacherProfileEditor from "../TeacherProfileEditor";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Edit Teacher Profile | Teachers",
   description: "Edit teacher profile",
@@ -14,8 +17,9 @@ export const metadata = {
 export default async function TeacherProfileEditPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   try {
     await requireAuth();
   } catch (error) {
@@ -35,7 +39,7 @@ export default async function TeacherProfileEditPage({
 
   // 선생님 정보 조회
   const teacher = await prisma.teacher.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
   });
 
   if (!teacher) {
@@ -49,7 +53,7 @@ export default async function TeacherProfileEditPage({
           <h1 className="text-3xl font-bold text-navy mb-8">Edit Teacher Profile</h1>
           <TeacherProfileEditor 
             userRole={role} 
-            teacherId={params.id}
+            teacherId={resolvedParams.id}
             isAdminEdit={true}
           />
         </div>

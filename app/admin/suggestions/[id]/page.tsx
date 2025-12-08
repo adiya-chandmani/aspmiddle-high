@@ -3,6 +3,9 @@ import { requireAdmin } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Suggestion Detail | Admin",
   description: "View suggestion details",
@@ -11,12 +14,13 @@ export const metadata = {
 export default async function AdminSuggestionDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
   await requireAdmin();
+  const resolvedParams = await Promise.resolve(params);
 
   const suggestion = await prisma.suggestion.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
     include: {
       author: {
         select: {

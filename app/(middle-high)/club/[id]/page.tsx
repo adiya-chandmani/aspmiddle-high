@@ -4,8 +4,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 interface ClubDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }
 
 function extractFirstImage(content: string): string | null {
@@ -14,8 +17,9 @@ function extractFirstImage(content: string): string | null {
 }
 
 export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
+  const resolvedParams = await Promise.resolve(params);
   const club = await prisma.clubArticle.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
   });
 
   if (!club || !club.isActive) {

@@ -4,6 +4,9 @@ import EditPostClient from "./EditPostClient";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Edit Post | Student Community",
   description: "Edit post",
@@ -12,8 +15,9 @@ export const metadata = {
 export default async function EditPostPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   // STUDENT role 또는 학교 이메일이면 접근 가능
   try {
     await requireStudentOrSchoolEmail();
@@ -28,7 +32,7 @@ export default async function EditPostPage({
   }
 
   const post = await prisma.post.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
     include: {
       author: {
         select: {
@@ -44,17 +48,17 @@ export default async function EditPostPage({
 
   // QNA 카테고리는 QNA 수정 페이지로 리다이렉트
   if (post.category === "QNA") {
-    redirect(`/qna/${params.id}/edit`);
+    redirect(`/qna/${resolvedParams.id}/edit`);
   }
 
   if (post.author.clerkUserId !== userId) {
-    redirect(`/community/student/${params.id}`);
+    redirect(`/community/student/${resolvedParams.id}`);
   }
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md border border-navy-200 p-6">
       <h1 className="text-2xl font-bold text-navy mb-6">Edit Post</h1>
-      <EditPostClient postId={params.id} initialPost={post} />
+      <EditPostClient postId={resolvedParams.id} initialPost={post} />
     </div>
   );
 }

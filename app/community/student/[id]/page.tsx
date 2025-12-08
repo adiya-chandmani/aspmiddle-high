@@ -2,6 +2,9 @@ import { requireStudentOrSchoolEmail } from "@/lib/auth";
 import PostDetail from "@/components/community/PostDetail";
 import Link from "next/link";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "게시물 상세 | Student Community",
   description: "게시물 상세 보기",
@@ -10,8 +13,9 @@ export const metadata = {
 export default async function PostDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   // STUDENT role 또는 학교 이메일이면 접근 가능
   try {
     await requireStudentOrSchoolEmail();
@@ -40,7 +44,7 @@ export default async function PostDetailPage({
       >
         ← 목록으로
       </Link>
-      <PostDetail postId={params.id} />
+      <PostDetail postId={resolvedParams.id} />
     </div>
   );
 }

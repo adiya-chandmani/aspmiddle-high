@@ -3,8 +3,11 @@ import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 interface NewsDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }
 
 function formatFullDate(date: Date | string) {
@@ -17,8 +20,9 @@ function formatFullDate(date: Date | string) {
 }
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
+  const resolvedParams = await Promise.resolve(params);
   const article = await prisma.newsArticle.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
     include: {
       author: { select: { name: true } },
     },

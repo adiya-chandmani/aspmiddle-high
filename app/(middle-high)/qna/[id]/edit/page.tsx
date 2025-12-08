@@ -5,6 +5,9 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Edit Q&A",
   description: "Edit Q&A question",
@@ -13,8 +16,9 @@ export const metadata = {
 export default async function QnaEditPostPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   // 모든 로그인 사용자 접근 가능 (학생/학교 이메일 제한 없음)
   try {
     await requireAuth();
@@ -29,7 +33,7 @@ export default async function QnaEditPostPage({
   }
 
   const post = await prisma.post.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
     include: {
       author: {
         select: {
@@ -45,12 +49,12 @@ export default async function QnaEditPostPage({
 
   // QNA 카테고리가 아니면 리다이렉트
   if (post.category !== "QNA") {
-    redirect(`/qna/${params.id}`);
+    redirect(`/qna/${resolvedParams.id}`);
   }
 
   // 작성자만 수정 가능
   if (post.author.clerkUserId !== userId) {
-    redirect(`/qna/${params.id}`);
+    redirect(`/qna/${resolvedParams.id}`);
   }
 
   return (
@@ -58,7 +62,7 @@ export default async function QnaEditPostPage({
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md border border-navy-200 p-6">
           <h1 className="text-2xl font-bold text-navy mb-6">Edit Q&A</h1>
-          <QnaEditPostClient postId={params.id} initialPost={post} />
+          <QnaEditPostClient postId={resolvedParams.id} initialPost={post} />
         </div>
       </div>
     </MiddleHighHeroLayout>

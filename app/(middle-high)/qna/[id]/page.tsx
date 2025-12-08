@@ -4,6 +4,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Q&A Detail",
   description: "View Q&A question details",
@@ -12,8 +15,9 @@ export const metadata = {
 export default async function QnaDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   // 모든 로그인 사용자 접근 가능 (학생/학교 이메일 제한 없음)
   try {
     await requireAuth();
@@ -30,7 +34,7 @@ export default async function QnaDetailPage({
         >
           ← Back to List
         </Link>
-        <PostDetail postId={params.id} category="QNA" />
+        <PostDetail postId={resolvedParams.id} category="QNA" />
       </div>
     </MiddleHighHeroLayout>
   );

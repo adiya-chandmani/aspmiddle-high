@@ -5,6 +5,9 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import TeacherProfileEditor from "@/app/(middle-high)/teachers/profile/TeacherProfileEditor";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Edit Teacher Profile | Admin",
   description: "Edit teacher profile",
@@ -13,8 +16,9 @@ export const metadata = {
 export default async function AdminTeacherEditPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
   try {
     await requireAuth();
   } catch (error) {
@@ -34,7 +38,7 @@ export default async function AdminTeacherEditPage({
 
   // Fetch teacher information
   const teacher = await prisma.teacher.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
   });
 
   if (!teacher) {
@@ -49,7 +53,7 @@ export default async function AdminTeacherEditPage({
       </div>
       <TeacherProfileEditor 
         userRole={role} 
-        teacherId={params.id}
+        teacherId={resolvedParams.id}
         isAdminEdit={true}
       />
     </div>
