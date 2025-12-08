@@ -11,10 +11,11 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
-  // Handle both Promise and direct params (Next.js 14 compatibility)
-  const resolvedParams = await Promise.resolve(params);
-  const { id } = resolvedParams;
   try {
+    // Handle both Promise and direct params (Next.js 14/15 compatibility)
+    const resolvedParams = await Promise.resolve(params);
+    const { id } = resolvedParams;
+    
     // Verify admin permissions
     const { userId } = await requireAdmin();
 
