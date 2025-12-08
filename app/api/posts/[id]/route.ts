@@ -3,17 +3,21 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { getUserRole } from "@/lib/auth";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET: 게시물 상세 조회
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
     const role = userId ? await getUserRole(userId) : null;
 
     const post = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         author: {
           select: {
@@ -116,9 +120,10 @@ export async function GET(
 // PUT: 게시물 수정
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
 
     if (!userId) {
@@ -133,7 +138,7 @@ export async function PUT(
 
     // 게시물 확인
     const post = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         author: {
           select: {
@@ -183,7 +188,7 @@ export async function PUT(
 
     // 게시물 수정
     const updatedPost = await prisma.post.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         title: title.trim(),
         content: content.trim(),

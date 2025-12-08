@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // POST: 좋아요 토글
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
 
     if (!userId) {
@@ -19,7 +23,7 @@ export async function POST(
 
     // 게시물 확인
     const post = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!post || post.isDeleted || post.isHidden) {
@@ -50,7 +54,7 @@ export async function POST(
     const existingLike = await prisma.like.findUnique({
       where: {
         postId_userId: {
-          postId: params.id,
+          postId: resolvedParams.id,
           userId: userId,
         },
       },
@@ -66,7 +70,7 @@ export async function POST(
 
       // 게시물 좋아요 수 감소
       await prisma.post.update({
-        where: { id: params.id },
+        where: { id: resolvedParams.id },
         data: {
           likeCount: {
             decrement: 1,
@@ -79,14 +83,14 @@ export async function POST(
       // 좋아요 추가
       await prisma.like.create({
         data: {
-          postId: params.id,
+          postId: resolvedParams.id,
           userId: userId,
         },
       });
 
       // 게시물 좋아요 수 증가
       await prisma.post.update({
-        where: { id: params.id },
+        where: { id: resolvedParams.id },
         data: {
           likeCount: {
             increment: 1,
@@ -110,9 +114,10 @@ export async function POST(
 // GET: 좋아요 상태 확인
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
 
     if (!userId) {
@@ -122,7 +127,7 @@ export async function GET(
     const like = await prisma.like.findUnique({
       where: {
         postId_userId: {
-          postId: params.id,
+          postId: resolvedParams.id,
           userId: userId,
         },
       },

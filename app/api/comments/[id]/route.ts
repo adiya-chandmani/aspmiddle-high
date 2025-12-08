@@ -3,11 +3,15 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { getCurrentUserRole } from "@/lib/auth";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
 
     if (!userId) {
@@ -18,7 +22,7 @@ export async function DELETE(
     }
 
     const comment = await prisma.comment.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       select: {
         id: true,
         authorId: true,
@@ -44,7 +48,7 @@ export async function DELETE(
     }
 
     await prisma.comment.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         isDeleted: true,
       },

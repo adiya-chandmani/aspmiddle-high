@@ -2,15 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET: 댓글 조회
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const comments = await prisma.comment.findMany({
       where: {
-        postId: params.id,
+        postId: resolvedParams.id,
         isDeleted: false,
         isHidden: false,
       },
@@ -56,9 +60,10 @@ export async function GET(
 // POST: 댓글 작성
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
 
     if (!userId) {
@@ -81,7 +86,7 @@ export async function POST(
 
     // 게시물 확인
     const post = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!post || post.isDeleted || post.isHidden) {
@@ -111,7 +116,7 @@ export async function POST(
     // 댓글 작성
     const comment = await prisma.comment.create({
       data: {
-        postId: params.id,
+        postId: resolvedParams.id,
         authorId: userId,
         content: content.trim(),
         visibilityName: visibilityName || "nickname",
@@ -129,7 +134,7 @@ export async function POST(
 
     // 게시물 댓글 수 업데이트
     await prisma.post.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         commentCount: {
           increment: 1,
