@@ -117,14 +117,14 @@ export async function POST(req: Request) {
       const { id, email_addresses, first_name, last_name } = userData;
       console.log("[Webhook] Processing user:", { 
         id, 
-        email: email_addresses[0]?.email_address,
+        email: email_addresses?.[0]?.email_address,
         first_name,
         last_name,
       });
 
       try {
         // 이메일 도메인 확인하여 역할 결정
-        const email = email_addresses[0]?.email_address || null;
+        const email = email_addresses?.[0]?.email_address || null;
         const schoolEmailDomains = process.env.SCHOOL_EMAIL_DOMAINS?.split(",").map(d => d.trim()) || [];
         
         console.log("[Webhook] School email domains:", schoolEmailDomains);
