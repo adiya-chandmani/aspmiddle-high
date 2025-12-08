@@ -3,8 +3,9 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
 
-// Force dynamic rendering
+// Force dynamic rendering - prevent static generation
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // POST: Process report action
 export async function POST(
@@ -13,7 +14,18 @@ export async function POST(
 ) {
   try {
     // Handle both Promise and direct params (Next.js 14/15 compatibility)
-    const resolvedParams = await Promise.resolve(params);
+    // Ensure params is resolved before use
+    const resolvedParams = params instanceof Promise 
+      ? await params 
+      : await Promise.resolve(params);
+    
+    if (!resolvedParams || !resolvedParams.id) {
+      return NextResponse.json(
+        { error: "Invalid request parameters." },
+        { status: 400 }
+      );
+    }
+    
     const { id } = resolvedParams;
     
     // Verify admin permissions
