@@ -3,6 +3,9 @@ import { redirect } from "next/navigation";
 import Header from "@/components/navigation/Header";
 import Footer from "@/components/navigation/Footer";
 
+// Force dynamic rendering (requires authentication)
+export const dynamic = 'force-dynamic';
+
 export default async function MiddleHighLayout({
   children,
 }: {

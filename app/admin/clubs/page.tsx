@@ -1,6 +1,9 @@
 import ClubManager from "@/components/admin/ClubManager";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function AdminClubsPage() {
   const clubArticles = await prisma.clubArticle.findMany({
     orderBy: [{ section: "asc" }, { order: "asc" }, { createdAt: "desc" }],

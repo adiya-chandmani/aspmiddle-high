@@ -5,6 +5,9 @@ import { auth } from "@clerk/nextjs/server";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 import TeacherProfileEditor from "./TeacherProfileEditor";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "프로필 수정 | Teachers",
   description: "선생님 프로필 수정",

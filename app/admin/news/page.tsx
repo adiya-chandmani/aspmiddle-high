@@ -1,6 +1,9 @@
 import NewsManager from "@/components/admin/NewsManager";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function AdminNewsPage() {
   const newsArticles = await prisma.newsArticle.findMany({
     orderBy: { publishedAt: "desc" },

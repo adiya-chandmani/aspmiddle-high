@@ -3,6 +3,9 @@ import { currentUser, auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import AdminNav from "@/components/admin/AdminNav";
 
+// Force dynamic rendering (admin pages use auth and database)
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({
   children,
 }: {

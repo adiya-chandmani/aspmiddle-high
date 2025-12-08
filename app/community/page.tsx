@@ -3,6 +3,9 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserRole } from "@/lib/auth";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Community | School Web Platform",
   description: "Student Community",

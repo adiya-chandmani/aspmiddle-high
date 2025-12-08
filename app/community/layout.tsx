@@ -4,6 +4,9 @@ import { UserButton } from "@clerk/nextjs";
 import { getCurrentUserRole } from "@/lib/auth";
 import CommunityNav from "@/components/community/CommunityNav";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function CommunityLayout({
   children,
 }: {

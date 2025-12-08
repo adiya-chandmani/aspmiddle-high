@@ -2,6 +2,9 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import ClearReportsButton from "@/components/admin/ClearReportsButton";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Report Management | Admin",
   description: "Manage reported posts and comments",

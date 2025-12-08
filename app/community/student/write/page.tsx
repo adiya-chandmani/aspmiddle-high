@@ -2,6 +2,9 @@ import { requireStudentOrSchoolEmail } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import WritePageClient from "./WritePageClient";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "글쓰기 | Student Community",
   description: "게시물 작성",

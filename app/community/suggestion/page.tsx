@@ -2,6 +2,9 @@ import { requireStudentOrSchoolEmail } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import SuggestionClient from "./SuggestionClient";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Suggestion | Student Community",
   description: "Suggestion board for students",

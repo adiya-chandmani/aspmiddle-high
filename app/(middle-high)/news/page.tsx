@@ -8,6 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 function getSnippet(summary?: string | null, content?: string) {
   if (summary && summary.trim().length > 0) {
     return summary;

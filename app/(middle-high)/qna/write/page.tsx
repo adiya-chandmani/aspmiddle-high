@@ -3,6 +3,9 @@ import { redirect } from "next/navigation";
 import QnaWritePageClient from "./WritePageClient";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Ask Question | Q&A",
   description: "Ask questions to the school and administrators",

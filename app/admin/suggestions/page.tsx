@@ -3,6 +3,9 @@ import { requireAdmin } from "@/lib/auth";
 import Link from "next/link";
 import ClearSuggestionsButton from "@/components/admin/ClearSuggestionsButton";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Suggestions | Admin",
   description: "View and manage student suggestions",

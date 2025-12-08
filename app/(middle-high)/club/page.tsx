@@ -7,6 +7,9 @@ import { prisma } from "@/lib/db";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 import ClubTabsCube from "@/components/club/ClubTabsCube";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function ClubPage() {
   const clubs = await prisma.clubArticle.findMany({
     where: { isActive: true },

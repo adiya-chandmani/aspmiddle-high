@@ -4,6 +4,9 @@ import { getUserRole } from "@/lib/auth";
 import { auth } from "@clerk/nextjs/server";
 import TeacherProfileEditor from "@/app/(middle-high)/teachers/profile/TeacherProfileEditor";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Add New Teacher | Admin",
   description: "Add new teacher profile",

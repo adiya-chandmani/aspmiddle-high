@@ -1,6 +1,9 @@
 import UserRoleManager from "@/components/admin/UserRoleManager";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function AdminUsersPage() {
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "desc" },
