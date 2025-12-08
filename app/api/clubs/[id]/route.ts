@@ -2,9 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
 
-export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
+  const resolvedParams = await Promise.resolve(params);
   const article = await prisma.clubArticle.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
   });
   if (!article) {
     return NextResponse.json({ error: "Content not found." }, { status: 404 });
@@ -12,9 +16,10 @@ export async function GET(_request: NextRequest, { params }: { params: { id: str
   return NextResponse.json(article);
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
   try {
     await requireAdmin();
+    const resolvedParams = await Promise.resolve(params);
     const { title, summary, content, section, coverImage, order, isActive } = await request.json();
 
     if (!title || !title.trim()) {
@@ -25,7 +30,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const updated = await prisma.clubArticle.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         title: title.trim(),
         summary: summary?.trim() || null,
@@ -47,11 +52,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(_request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
   try {
     await requireAdmin();
+    const resolvedParams = await Promise.resolve(params);
     await prisma.clubArticle.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
     return NextResponse.json({ success: true });
   } catch (error: any) {

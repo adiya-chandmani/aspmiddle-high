@@ -4,12 +4,16 @@ import { prisma } from "@/lib/db";
 import { getUserRole } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET: 특정 선생님의 정보 조회 (ADMIN, STAFF만 가능)
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json(
@@ -28,7 +32,7 @@ export async function GET(
     }
 
     const teacher = await prisma.teacher.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!teacher) {
@@ -51,9 +55,10 @@ export async function GET(
 // PUT: 특정 선생님의 정보 수정 (ADMIN, STAFF만 가능)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json(
@@ -84,7 +89,7 @@ export async function PUT(
 
     // 선생님 정보 업데이트
     const teacher = await prisma.teacher.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         name: name.trim(),
         subject: subject?.trim() || null,
@@ -97,7 +102,7 @@ export async function PUT(
     // 캐시 무효화하여 즉시 업데이트 반영
     revalidatePath("/teachers");
     revalidatePath("/admin/teachers");
-    revalidatePath(`/teachers/profile/${params.id}`);
+    revalidatePath(`/teachers/profile/${resolvedParams.id}`);
 
     return NextResponse.json(teacher, {
       headers: {
@@ -124,9 +129,10 @@ export async function PUT(
 // PATCH: 활성/비활성 토글 (ADMIN, STAFF만 가능)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json(
@@ -154,7 +160,7 @@ export async function PATCH(
     }
 
     const teacher = await prisma.teacher.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         isActive,
       },
@@ -163,7 +169,7 @@ export async function PATCH(
     // 캐시 무효화
     revalidatePath("/teachers");
     revalidatePath("/admin/teachers");
-    revalidatePath(`/teachers/profile/${params.id}`);
+    revalidatePath(`/teachers/profile/${resolvedParams.id}`);
 
     return NextResponse.json(teacher, {
       headers: {
@@ -190,9 +196,10 @@ export async function PATCH(
 // DELETE: 특정 선생님의 프로필 완전 삭제 (ADMIN, STAFF만 가능)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const resolvedParams = await Promise.resolve(params);
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json(
@@ -212,13 +219,13 @@ export async function DELETE(
 
     // 완전 삭제 (hard delete)
     await prisma.teacher.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     // 캐시 무효화하여 즉시 업데이트 반영
     revalidatePath("/teachers");
     revalidatePath("/admin/teachers");
-    revalidatePath(`/teachers/profile/${params.id}`);
+    revalidatePath(`/teachers/profile/${resolvedParams.id}`);
 
     return NextResponse.json({ message: "Profile deleted successfully." }, {
       headers: {
