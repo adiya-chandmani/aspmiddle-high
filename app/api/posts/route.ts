@@ -4,6 +4,9 @@ import { prisma } from "@/lib/db";
 import { getUserRole } from "@/lib/auth";
 import { sortByHotScore } from "@/lib/utils/hot-posts";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET: 게시물 목록 조회
 export async function GET(request: NextRequest) {
   try {

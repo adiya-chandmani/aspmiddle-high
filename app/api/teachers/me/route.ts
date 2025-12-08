@@ -4,6 +4,9 @@ import { prisma } from "@/lib/db";
 import { getUserRole } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET: 현재 선생님의 정보 조회
 export async function GET(request: NextRequest) {
   try {

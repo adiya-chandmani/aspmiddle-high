@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // POST: 제안/건의사항 제출
 export async function POST(request: NextRequest) {
   try {
