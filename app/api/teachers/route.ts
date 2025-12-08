@@ -4,6 +4,9 @@ import { auth } from "@clerk/nextjs/server";
 import { getUserRole } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET: 모든 선생님 정보 조회 (공개)
 export async function GET(request: NextRequest) {
   try {
