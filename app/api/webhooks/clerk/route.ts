@@ -54,18 +54,32 @@ export async function POST(req: Request) {
     const { id, email_addresses, first_name, last_name } = evt.data;
 
     try {
+      // 이메일 도메인 확인하여 역할 결정
+      const email = email_addresses[0]?.email_address || null;
+      const schoolEmailDomains = process.env.SCHOOL_EMAIL_DOMAINS?.split(",").map(d => d.trim()) || [];
+      
+      // 학교 이메일 도메인을 가진 사용자는 STUDENT 역할 부여
+      let defaultRole: "STUDENT" | "VISITOR" = "VISITOR";
+      if (email) {
+        const domain = email.split("@")[1];
+        if (schoolEmailDomains.includes(domain)) {
+          defaultRole = "STUDENT";
+        }
+      }
+
       // 사용자 생성 또는 업데이트
       await prisma.user.upsert({
         where: { clerkUserId: id },
         update: {
-          email: email_addresses[0]?.email_address || null,
+          email: email || null,
           name: first_name && last_name ? `${first_name} ${last_name}` : first_name || last_name || null,
+          // 업데이트 시에는 역할을 변경하지 않음 (이미 설정된 역할 유지)
         },
         create: {
           clerkUserId: id,
-          email: email_addresses[0]?.email_address || null,
+          email: email || null,
           name: first_name && last_name ? `${first_name} ${last_name}` : first_name || last_name || null,
-          role: "STUDENT", // 기본값은 STUDENT
+          role: defaultRole, // 학교 이메일이면 STUDENT, 아니면 VISITOR
         },
       });
     } catch (error) {

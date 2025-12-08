@@ -203,12 +203,22 @@ export async function POST(request: NextRequest) {
         ? `${clerkUser.firstName} ${clerkUser.lastName}`
         : clerkUser.firstName || clerkUser.lastName || null;
 
+      // 이메일 도메인 확인하여 역할 결정
+      const schoolEmailDomains = process.env.SCHOOL_EMAIL_DOMAINS?.split(",").map(d => d.trim()) || [];
+      let defaultRole: "STUDENT" | "VISITOR" = "VISITOR";
+      if (email) {
+        const domain = email.split("@")[1];
+        if (schoolEmailDomains.includes(domain)) {
+          defaultRole = "STUDENT";
+        }
+      }
+
       user = await prisma.user.create({
         data: {
           clerkUserId: userId,
           email,
           name,
-          role: "STUDENT", // 기본값은 STUDENT
+          role: defaultRole, // 학교 이메일이면 STUDENT, 아니면 VISITOR
         },
       });
     }
