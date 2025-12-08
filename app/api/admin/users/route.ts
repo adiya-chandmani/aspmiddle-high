@@ -3,6 +3,9 @@ import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
 import { UserRole } from "@prisma/client";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     await requireAdmin();

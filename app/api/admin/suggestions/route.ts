@@ -4,6 +4,9 @@ import { prisma } from "@/lib/db";
 import { getUserRole } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // DELETE: 모든 제안 기록 삭제 (ADMIN만 가능)
 export async function DELETE(request: NextRequest) {
   try {

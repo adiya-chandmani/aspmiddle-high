@@ -4,6 +4,9 @@ import { prisma } from "@/lib/db";
 import { getUserRole } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // DELETE: Clear all report records (ADMIN only)
 export async function DELETE(request: NextRequest) {
   try {
