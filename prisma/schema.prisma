@@ -1,0 +1,281 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 사용자 테이블 (Clerk와 연동)
+model User {
+  id            String   @id @default(cuid())
+  clerkUserId   String   @unique @map("clerk_user_id")
+  role          UserRole @default(STUDENT)
+  email         String?
+  name          String?
+  nickname      String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // 관계
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  reports       Report[]
+  adminActions  AdminAction[]
+  newsArticles  NewsArticle[]
+  clubArticles  ClubArticle[]
+  teacher       Teacher?
+  suggestions   Suggestion[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  STUDENT
+  PARENT
+  STAFF
+  TEACHER
+  VISITOR
+  ADMIN
+}
+
+// 게시물 테이블
+model Post {
+  id            String      @id @default(cuid())
+  title         String
+  content       String       @db.Text
+  category      PostCategory @default(FREE)
+  authorId      String       @map("author_id")
+  visibilityName String      @default("nickname") @map("visibility_name") // "anonymous" or "nickname"
+  isHidden      Boolean      @default(false) @map("is_hidden")
+  isDeleted     Boolean      @default(false) @map("is_deleted")
+  likeCount     Int          @default(0) @map("like_count")
+  commentCount  Int         @default(0) @map("comment_count")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  // 관계
+  author        User        @relation(fields: [authorId], references: [clerkUserId], onDelete: Cascade)
+  comments      Comment[]
+  likes         Like[]
+  reports       Report[]
+
+  @@map("posts")
+}
+
+enum PostCategory {
+  FREE          // 자유게시판
+  CONSULTATION  // 고민상담
+  STUDY         // 공부·시험 정보
+  INFO          // 정보/팁
+  LOST_FOUND    // 분실물
+  CLUB          // 동아리
+  QNA           // Q&A
+  ANNOUNCEMENT  // 공지사항
+}
+
+// 댓글 테이블
+model Comment {
+  id            String   @id @default(cuid())
+  postId        String   @map("post_id")
+  authorId      String   @map("author_id")
+  content       String   @db.Text
+  visibilityName String  @default("nickname") @map("visibility_name")
+  isHidden      Boolean  @default(false) @map("is_hidden")
+  isDeleted     Boolean  @default(false) @map("is_deleted")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // 관계
+  post          Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author        User     @relation(fields: [authorId], references: [clerkUserId], onDelete: Cascade)
+  reports       Report[]
+
+  @@map("comments")
+}
+
+// 좋아요 테이블
+model Like {
+  id        String   @id @default(cuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // 관계
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@map("likes")
+}
+
+// 신고 테이블
+model Report {
+  id            String      @id @default(cuid())
+  reporterId    String      @map("reporter_id")
+  postId        String?     @map("post_id")
+  commentId     String?     @map("comment_id")
+  reason        String      @db.Text
+  status        ReportStatus @default(PENDING)
+  reportCount   Int         @default(1) @map("report_count")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  // 관계
+  reporter      User        @relation(fields: [reporterId], references: [clerkUserId], onDelete: Cascade)
+  post          Post?       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment       Comment?    @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  adminActions  AdminAction[]
+
+  @@map("reports")
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+// 관리자 조치 테이블
+model AdminAction {
+  id            String          @id @default(cuid())
+  reportId      String          @map("report_id")
+  adminId       String          @map("admin_id")
+  actionType    AdminActionType @map("action_type")
+  description   String?         @db.Text
+  createdAt     DateTime        @default(now()) @map("created_at")
+
+  // 관계
+  report        Report          @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  admin         User            @relation(fields: [adminId], references: [clerkUserId], onDelete: Cascade)
+
+  @@map("admin_actions")
+}
+
+enum AdminActionType {
+  HIDE      // 숨김
+  DELETE    // 삭제
+  WARNING   // 경고
+  SUSPEND   // 계정 정지
+}
+
+// 입학 문의 테이블
+model AdmissionInquiry {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  message     String   @db.Text
+  status      String   @default("pending")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("admission_inquiries")
+}
+
+// 공지사항 테이블
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  isPinned    Boolean  @default(false) @map("is_pinned")
+  isPublic    Boolean  @default(true) @map("is_public") // 공개 영역에 표시 여부
+  isInternal  Boolean  @default(true) @map("is_internal") // 내부 영역에 표시 여부
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("announcements")
+}
+
+// 이벤트/캘린더 테이블
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String?   @db.Text
+  startDate   DateTime  @map("start_date")
+  endDate     DateTime? @map("end_date")
+  isPublic    Boolean   @default(true) @map("is_public")
+  isInternal  Boolean   @default(true) @map("is_internal")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("events")
+}
+
+// 뉴스 아티클 테이블
+model NewsArticle {
+  id           String   @id @default(cuid())
+  title        String
+  summary      String?
+  content      String   @db.Text
+  category     String?  @default("General")
+  coverImage   String?  @map("cover_image")
+  isPublished  Boolean  @default(true) @map("is_published")
+  publishedAt  DateTime @default(now()) @map("published_at")
+  authorId     String?  @map("author_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  author       User?    @relation(fields: [authorId], references: [clerkUserId], onDelete: SetNull)
+
+  @@map("news_articles")
+}
+
+// 동아리/섹션 콘텐츠 테이블
+model ClubArticle {
+  id         String   @id @default(cuid())
+  title      String
+  summary    String?
+  content    String   @db.Text
+  section    String   @default("General")
+  coverImage String?  @map("cover_image")
+  order      Int      @default(0)
+  isActive   Boolean  @default(true) @map("is_active")
+  authorId   String?  @map("author_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  author     User?    @relation(fields: [authorId], references: [clerkUserId], onDelete: SetNull)
+
+  @@map("club_articles")
+}
+
+// 선생님 정보 테이블
+model Teacher {
+  id          String   @id @default(cuid())
+  userId      String   @unique @map("user_id") // User의 clerkUserId와 연결
+  name        String
+  subject     String?
+  email       String?
+  bio         String?  @db.Text
+  profileImage String? @map("profile_image")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user        User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+
+  @@map("teachers")
+}
+
+// 제안/건의사항 테이블
+model Suggestion {
+  id          String   @id @default(cuid())
+  name        String?  // 선택사항
+  title       String
+  content     String   @db.Text
+  authorId    String?  @map("author_id") // 로그인한 사용자의 경우
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  author      User?    @relation(fields: [authorId], references: [clerkUserId], onDelete: SetNull)
+
+  @@map("suggestions")
+}
+
