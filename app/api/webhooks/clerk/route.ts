@@ -195,36 +195,24 @@ export async function POST(req: Request) {
       console.log("[Webhook] Processing user deletion:", { id });
 
       try {
-        // 사용자 삭제 (존재하지 않아도 에러 발생하지 않도록 deleteMany 사용)
-        const result = await prisma.user.deleteMany({
+        // 사용자 삭제
+        await prisma.user.delete({
           where: { clerkUserId: id },
         });
-        
-        if (result.count > 0) {
-          console.log("[Webhook] ✅ User deleted successfully:", { id });
-        } else {
-          console.log("[Webhook] ⚠️ User not found in database (may have been already deleted):", { id });
-          // 사용자가 이미 삭제되었거나 존재하지 않는 경우는 정상으로 처리
-        }
+        console.log("[Webhook] ✅ User deleted successfully:", { id });
       } catch (error: any) {
-        // P2025 에러는 "레코드가 존재하지 않음"이므로 무시
-        if (error.code === 'P2025') {
-          console.log("[Webhook] ⚠️ User not found in database (may have been already deleted):", { id });
-          // 정상으로 처리하고 계속 진행
-        } else {
-          console.error("[Webhook] ❌ Error deleting user from database:", {
-            error: error.message,
-            name: error.name,
-            code: error.code,
-          });
-          return new Response(
-            JSON.stringify({ 
-              error: "Error deleting user",
-              details: error.message,
-            }),
-            { status: 500, headers: { "Content-Type": "application/json" } }
-          );
-        }
+        console.error("[Webhook] ❌ Error deleting user from database:", {
+          error: error.message,
+          name: error.name,
+          code: error.code,
+        });
+        return new Response(
+          JSON.stringify({ 
+            error: "Error deleting user",
+            details: error.message,
+          }),
+          { status: 500, headers: { "Content-Type": "application/json" } }
+        );
       }
     } else {
       console.log("[Webhook] ⚠️ Unhandled event type:", eventType);
