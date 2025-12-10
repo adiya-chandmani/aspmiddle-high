@@ -23,8 +23,8 @@ export default async function QnaWritePage() {
     <MiddleHighHeroLayout active="qna">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">Ask Question</h1>
-          <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Ask Question</h1>
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
             <QnaWritePageClient />
           </div>
         </div>

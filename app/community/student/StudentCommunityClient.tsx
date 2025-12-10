@@ -19,13 +19,13 @@ export default function StudentCommunityClient() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* 페이지 헤더 */}
-      <div className="bg-white border-b border-gray-200 px-6 py-5">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-5">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Board</h2>
-            <p className="text-sm text-gray-600">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Board</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               A space to share free discussions, consultations, and study information.
             </p>
           </div>
@@ -39,14 +39,14 @@ export default function StudentCommunityClient() {
       </div>
 
       {/* 카테고리 탭 */}
-      <div className="bg-gray-50 border-b border-gray-200 px-6">
+      <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-6">
         <div className="flex space-x-1">
           <button
             onClick={() => handleCategoryClick("all")}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeCategory === "all" && !isHot
-                ? "text-navy border-orange bg-white"
-                : "text-gray-600 border-transparent hover:text-orange hover:border-orange"
+                ? "text-navy dark:text-orange border-orange bg-white dark:bg-gray-800"
+                : "text-gray-600 dark:text-gray-400 border-transparent hover:text-orange hover:border-orange"
             }`}
             >
               All
@@ -55,8 +55,8 @@ export default function StudentCommunityClient() {
               onClick={() => handleCategoryClick("FREE")}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeCategory === "FREE" && !isHot
-                  ? "text-navy border-orange bg-white"
-                  : "text-gray-600 border-transparent hover:text-orange hover:border-orange"
+                  ? "text-navy dark:text-orange border-orange bg-white dark:bg-gray-800"
+                  : "text-gray-600 dark:text-gray-400 border-transparent hover:text-orange hover:border-orange"
               }`}
             >
               Free Board
@@ -65,8 +65,8 @@ export default function StudentCommunityClient() {
               onClick={() => handleCategoryClick("CONSULTATION")}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeCategory === "CONSULTATION" && !isHot
-                  ? "text-navy border-orange bg-white"
-                  : "text-gray-600 border-transparent hover:text-orange hover:border-orange"
+                  ? "text-navy dark:text-orange border-orange bg-white dark:bg-gray-800"
+                  : "text-gray-600 dark:text-gray-400 border-transparent hover:text-orange hover:border-orange"
               }`}
             >
               Consultation
@@ -75,8 +75,8 @@ export default function StudentCommunityClient() {
               onClick={() => handleCategoryClick("STUDY")}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeCategory === "STUDY" && !isHot
-                  ? "text-navy border-orange bg-white"
-                  : "text-gray-600 border-transparent hover:text-orange hover:border-orange"
+                  ? "text-navy dark:text-orange border-orange bg-white dark:bg-gray-800"
+                  : "text-gray-600 dark:text-gray-400 border-transparent hover:text-orange hover:border-orange"
               }`}
             >
               Study & Exams
@@ -85,8 +85,8 @@ export default function StudentCommunityClient() {
             onClick={() => handleCategoryClick("hot")}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               isHot
-                ? "text-navy border-orange bg-white"
-                : "text-gray-600 border-transparent hover:text-orange hover:border-orange"
+                ? "text-navy dark:text-orange border-orange bg-white dark:bg-gray-800"
+                : "text-gray-600 dark:text-gray-400 border-transparent hover:text-orange hover:border-orange"
             }`}
           >
             HOT

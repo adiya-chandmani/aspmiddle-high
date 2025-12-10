@@ -7,8 +7,8 @@ import "react-quill/dist/quill.snow.css";
 // Quill을 동적으로 로드 (SSR 방지)
 const ReactQuill = dynamic(() => import("react-quill"), { 
   ssr: false,
-  loading: () => <div className="h-[300px] border border-gray-300 rounded-lg bg-white flex items-center justify-center">
-    <p className="text-gray-500">Loading editor...</p>
+  loading: () => <div className="h-[300px] border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center">
+    <p className="text-gray-500 dark:text-gray-400">Loading editor...</p>
   </div>
 });
 
@@ -232,7 +232,7 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Title <span className="text-red-500">*</span>
         </label>
         <input
@@ -240,7 +240,7 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           placeholder="Enter title"
           maxLength={200}
         />
@@ -248,14 +248,14 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
 
       {!hideCategory && (
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Category
           </label>
           <select
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
             {categories.map((cat) => (
               <option key={cat.value} value={cat.value}>
@@ -267,10 +267,10 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Content <span className="text-red-500">*</span>
         </label>
-        <div className="border border-gray-300 rounded-lg overflow-hidden">
+        <div className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
           {isMounted && (
             <ReactQuill
               theme="snow"
@@ -279,7 +279,7 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
               modules={modules}
               formats={formats}
               placeholder="Enter content"
-              className="bg-white"
+              className="bg-white dark:bg-gray-800"
             />
           )}
         </div>
@@ -291,9 +291,9 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
           id="anonymous"
           checked={isAnonymous}
           onChange={(e) => setIsAnonymous(e.target.checked)}
-          className="w-4 h-4 text-navy border-gray-300 rounded focus:ring-navy"
+          className="w-4 h-4 text-navy dark:text-orange border-gray-300 dark:border-gray-600 rounded focus:ring-navy dark:focus:ring-orange bg-white dark:bg-gray-700"
         />
-        <label htmlFor="anonymous" className="ml-2 text-sm text-gray-700">
+        <label htmlFor="anonymous" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
           Post as Anonymous
         </label>
       </div>
@@ -303,7 +303,7 @@ export default function PostEditor({ onSubmit, onCancel, initialData, hideCatego
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-800"
           >
             Cancel
           </button>
