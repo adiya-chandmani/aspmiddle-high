@@ -34,16 +34,16 @@ export default async function AdminLayout({
   const user = await currentUser();
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-navy text-white shadow-sm">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      <header className="bg-navy dark:bg-gray-800 text-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div>
-            <p className="text-sm text-white/70">Admin Console</p>
+            <p className="text-sm text-white/70 dark:text-gray-300">Admin Console</p>
             <h1 className="text-2xl font-bold">School Content Manager</h1>
           </div>
           <div className="text-right text-sm">
             <p className="font-semibold">{user?.firstName}</p>
-            <p className="text-white/70">{user?.emailAddresses[0]?.emailAddress}</p>
+            <p className="text-white/70 dark:text-gray-300">{user?.emailAddresses[0]?.emailAddress}</p>
           </div>
         </div>
         <AdminNav />

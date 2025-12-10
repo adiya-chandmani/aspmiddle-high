@@ -18,8 +18,8 @@ export default async function AdminClubsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Club Section Management</h2>
-        <p className="text-gray-600">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Club Section Management</h2>
+        <p className="text-gray-600 dark:text-gray-400">
           Create sections displayed in the top tabs and enter content for each section. Each section appears as a tab on the club page.
         </p>
       </div>

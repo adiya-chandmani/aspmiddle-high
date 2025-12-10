@@ -60,8 +60,8 @@ export default async function QnaEditPostPage({
   return (
     <MiddleHighHeroLayout active="qna">
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md border border-navy-200 p-6">
-          <h1 className="text-2xl font-bold text-navy mb-6">Edit Q&A</h1>
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md border border-navy-200 dark:border-gray-700 p-6">
+          <h1 className="text-2xl font-bold text-navy dark:text-white mb-6">Edit Q&A</h1>
           <QnaEditPostClient postId={resolvedParams.id} initialPost={post} />
         </div>
       </div>

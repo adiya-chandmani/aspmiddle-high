@@ -66,7 +66,7 @@ export default function QnaEditPostClient({ postId, initialPost }: QnaEditPostCl
   return (
     <>
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg mb-6">
           {error}
         </div>
       )}
