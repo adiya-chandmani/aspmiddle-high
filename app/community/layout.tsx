@@ -24,7 +24,7 @@ export default async function CommunityLayout({
   const email = user?.emailAddresses[0]?.emailAddress || "";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-navy-50/30 to-gray-100 relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-navy-50/30 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative">
       {/* 배경 장식 요소 */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* 블러 처리된 배경 텍스트 */}
@@ -39,7 +39,7 @@ export default async function CommunityLayout({
       
       <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
         {/* 헤더 섹션 - 공식 웹사이트 스타일 */}
-        <div className="mb-8 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden backdrop-blur-sm">
+        <div className="mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
           <div className="bg-navy text-white px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">

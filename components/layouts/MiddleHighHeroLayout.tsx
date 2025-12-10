@@ -48,7 +48,7 @@ export default function MiddleHighHeroLayout({
       </div>
 
       {/* Sub-Navigation Links */}
-      <div className="bg-white border-t border-gray-200">
+      <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4 md:px-8 py-6">
           <nav className="flex flex-wrap items-center gap-4 md:gap-6">
             {tabs.map((tab, index) => (
@@ -57,13 +57,13 @@ export default function MiddleHighHeroLayout({
                   href={tab.href}
                   className={`text-sm md:text-base font-medium pb-2 border-b-2 transition-colors ${
                     active === tab.key
-                      ? "text-navy border-orange"
-                      : "text-gray-700 border-transparent hover:text-orange hover:border-orange"
+                      ? "text-navy dark:text-orange border-orange"
+                      : "text-gray-700 dark:text-gray-300 border-transparent hover:text-orange hover:border-orange dark:hover:text-orange"
                   }`}
                 >
                   {tab.label}
                 </Link>
-                {index < tabs.length - 1 && <span className="text-gray-300 hidden sm:inline">|</span>}
+                {index < tabs.length - 1 && <span className="text-gray-300 dark:text-gray-600 hidden sm:inline">|</span>}
               </div>
             ))}
           </nav>
@@ -71,7 +71,7 @@ export default function MiddleHighHeroLayout({
       </div>
 
       {/* Page Content */}
-      <div className="bg-gray-50">{children}</div>
+      <div className="bg-gray-50 dark:bg-gray-900">{children}</div>
     </div>
   );
 }

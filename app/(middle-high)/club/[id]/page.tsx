@@ -34,7 +34,7 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
         <div className="mb-6">
           <Link
             href="/club"
-            className="text-sm text-gray-600 hover:text-orange transition-colors"
+            className="text-sm text-gray-600 dark:text-gray-400 hover:text-orange transition-colors"
           >
             ← Back to List
           </Link>
@@ -44,14 +44,14 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
           <p className="text-xs uppercase tracking-[0.3em] text-orange font-semibold">
             {club.section}
           </p>
-          <h1 className="text-4xl font-bold text-gray-900">{club.title}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">{club.title}</h1>
           {club.summary && (
-            <p className="text-lg text-gray-600">{club.summary}</p>
+            <p className="text-lg text-gray-600 dark:text-gray-300">{club.summary}</p>
           )}
         </div>
 
         {coverImage && (
-          <div className="relative w-full h-[280px] md:h-[360px] rounded-xl overflow-hidden border border-gray-200 mb-10">
+          <div className="relative w-full h-[280px] md:h-[360px] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-10">
             <Image
               src={coverImage}
               alt={club.title}
@@ -65,7 +65,7 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
         )}
 
         <div
-          className="prose max-w-none text-gray-800 leading-relaxed"
+          className="prose max-w-none text-gray-800 dark:text-gray-200 leading-relaxed prose-headings:dark:text-white prose-p:dark:text-gray-200 prose-strong:dark:text-white"
           dangerouslySetInnerHTML={{ __html: club.content }}
         />
       </article>

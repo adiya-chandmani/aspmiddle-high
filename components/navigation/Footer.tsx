@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-navy-800 text-gray-300">
+    <footer className="bg-navy-800 dark:bg-gray-900 text-gray-300 dark:text-gray-400">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Column - Social Media & School Info */}
@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
 
           {/* Middle Column - Contact Us */}
-          <div className="border-l border-gray-600 pl-8">
+          <div className="border-l border-gray-600 dark:border-gray-700 pl-8">
             <h3 className="text-white text-lg font-bold mb-6">Contact Us</h3>
             <div className="space-y-6 text-sm">
               <div>
@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
 
           {/* Right Column - Address */}
-          <div className="border-l border-gray-600 pl-8">
+          <div className="border-l border-gray-600 dark:border-gray-700 pl-8">
             <h3 className="text-white text-lg font-bold mb-6">Address</h3>
             <div className="space-y-6 text-sm">
               <div>

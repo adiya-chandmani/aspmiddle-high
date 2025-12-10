@@ -7,14 +7,14 @@ export default function CommunityNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex space-x-1 border-b border-gray-200 bg-white px-4 items-center justify-between">
+    <nav className="flex space-x-1 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 items-center justify-between">
       <div className="flex space-x-1">
         <Link
           href="/community/student"
           className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
             pathname === "/community/student" || pathname.startsWith("/community/student/")
-              ? "text-navy border-navy hover:bg-orange/10"
-              : "text-gray-600 hover:text-orange hover:bg-orange/5 border-transparent hover:border-orange"
+              ? "text-navy dark:text-orange border-navy dark:border-orange hover:bg-orange/10 dark:hover:bg-orange/20"
+              : "text-gray-600 dark:text-gray-400 hover:text-orange hover:bg-orange/5 dark:hover:bg-orange/10 border-transparent hover:border-orange"
           }`}
         >
           Student Community
@@ -23,8 +23,8 @@ export default function CommunityNav() {
           href="/community/suggestion"
           className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
             pathname === "/community/suggestion"
-              ? "text-navy border-navy hover:bg-orange/10"
-              : "text-gray-600 hover:text-orange hover:bg-orange/5 border-transparent hover:border-orange"
+              ? "text-navy dark:text-orange border-navy dark:border-orange hover:bg-orange/10 dark:hover:bg-orange/20"
+              : "text-gray-600 dark:text-gray-400 hover:text-orange hover:bg-orange/5 dark:hover:bg-orange/10 border-transparent hover:border-orange"
           }`}
         >
           Suggestion
@@ -32,7 +32,7 @@ export default function CommunityNav() {
       </div>
       <Link
         href="/"
-        className="p-2 text-gray-600 hover:text-orange hover:bg-orange/10 rounded-md transition-colors"
+        className="p-2 text-gray-600 dark:text-gray-400 hover:text-orange hover:bg-orange/10 dark:hover:bg-orange/20 rounded-md transition-colors"
         title="홈으로 이동"
       >
         <svg

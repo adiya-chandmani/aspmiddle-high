@@ -25,6 +25,42 @@ body {
   color: #f1f5f9;
 }
 
+/* Prose dark mode styles */
+.dark .prose {
+  color: #e2e8f0;
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: #ffffff;
+}
+
+.dark .prose p {
+  color: #e2e8f0;
+}
+
+.dark .prose strong {
+  color: #ffffff;
+}
+
+.dark .prose a {
+  color: #fc832b;
+}
+
+.dark .prose code {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.dark .prose pre {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
