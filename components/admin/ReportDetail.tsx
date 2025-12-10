@@ -73,15 +73,15 @@ export default function ReportDetail({ report }: ReportDetailProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "PENDING":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200";
       case "REVIEWED":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200";
       case "RESOLVED":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200";
       case "DISMISSED":
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
     }
   };
 
@@ -103,10 +103,10 @@ export default function ReportDetail({ report }: ReportDetailProps) {
   return (
     <div className="space-y-6">
       {/* Report Information */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Report Information
             </h3>
             <div className="flex items-center gap-2">
@@ -117,14 +117,14 @@ export default function ReportDetail({ report }: ReportDetailProps) {
               >
                 {getStatusLabel(report.status)}
               </span>
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 Report Count: {report.reportCount}
               </span>
             </div>
           </div>
           <Link
             href="/admin/reports"
-            className="text-sm text-gray-600 hover:text-orange"
+            className="text-sm text-gray-600 dark:text-gray-400 hover:text-orange dark:hover:text-orange-400"
           >
             ← Back to List
           </Link>
@@ -132,23 +132,23 @@ export default function ReportDetail({ report }: ReportDetailProps) {
 
         <div className="space-y-3">
           <div>
-            <label className="text-sm font-medium text-gray-700">Report Type</label>
-            <p className="mt-1 text-gray-900">{isPost ? "Post" : "Comment"}</p>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Report Type</label>
+            <p className="mt-1 text-gray-900 dark:text-white">{isPost ? "Post" : "Comment"}</p>
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700">Reason</label>
-            <p className="mt-1 text-gray-900 whitespace-pre-wrap">{report.reason}</p>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Reason</label>
+            <p className="mt-1 text-gray-900 dark:text-white whitespace-pre-wrap">{report.reason}</p>
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700">Reporter</label>
-            <p className="mt-1 text-gray-900">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Reporter</label>
+            <p className="mt-1 text-gray-900 dark:text-white">
               {report.reporter.nickname || report.reporter.name || "Anonymous"} (
               {report.reporter.email || "No email"})
             </p>
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700">Report Date</label>
-            <p className="mt-1 text-gray-900">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Report Date</label>
+            <p className="mt-1 text-gray-900 dark:text-white">
               {new Date(report.createdAt).toLocaleString("en-US")}
             </p>
           </div>
@@ -156,60 +156,60 @@ export default function ReportDetail({ report }: ReportDetailProps) {
       </div>
 
       {/* Author Information */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Author Information (Internal)
         </h3>
         {author ? (
           <div className="space-y-3">
             <div>
-              <label className="text-sm font-medium text-gray-700">Name</label>
-              <p className="mt-1 text-gray-900">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+              <p className="mt-1 text-gray-900 dark:text-white">
                 {author.nickname || author.name || "Anonymous"}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Clerk User ID
               </label>
-              <p className="mt-1 text-gray-900 font-mono text-sm">
+              <p className="mt-1 text-gray-900 dark:text-white font-mono text-sm">
                 {author.clerkUserId}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700">Role</label>
-              <p className="mt-1 text-gray-900">{author.role}</p>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+              <p className="mt-1 text-gray-900 dark:text-white">{author.role}</p>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700">Email</label>
-              <p className="mt-1 text-gray-900">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+              <p className="mt-1 text-gray-900 dark:text-white">
                 {author.email || "No email"}
               </p>
             </div>
           </div>
         ) : (
-          <p className="text-gray-500">Author information not found.</p>
+          <p className="text-gray-500 dark:text-gray-400">Author information not found.</p>
         )}
       </div>
 
       {/* Reported Content */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Reported {isPost ? "Post" : "Comment"} Content
         </h3>
         {isPost ? (
           <div>
             <div className="mb-4">
-              <h4 className="font-medium text-gray-900 mb-2">{report.post.title}</h4>
+              <h4 className="font-medium text-gray-900 dark:text-white mb-2">{report.post.title}</h4>
               <div
-                className="prose max-w-none text-gray-700"
+                className="prose max-w-none text-gray-700 dark:text-gray-300"
                 dangerouslySetInnerHTML={{ __html: report.post.content }}
               />
             </div>
             <Link
               href={`/community/student/${report.post.id}`}
               target="_blank"
-              className="text-sm text-orange hover:text-orange-700"
+              className="text-sm text-orange hover:text-orange-700 dark:hover:text-orange-400"
             >
               View Original Post →
             </Link>
@@ -217,17 +217,17 @@ export default function ReportDetail({ report }: ReportDetailProps) {
         ) : (
           <div>
             <div className="mb-4">
-              <p className="text-gray-700 whitespace-pre-wrap">
+              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
                 {report.comment.content}
               </p>
             </div>
             {report.comment.post && (
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <p className="text-sm text-gray-600 mb-2">Original Post:</p>
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Original Post:</p>
                 <Link
                   href={`/community/student/${report.comment.post.id}`}
                   target="_blank"
-                  className="text-sm text-orange hover:text-orange-700"
+                  className="text-sm text-orange hover:text-orange-700 dark:hover:text-orange-400"
                 >
                   {report.comment.post.title} →
                 </Link>
@@ -239,26 +239,26 @@ export default function ReportDetail({ report }: ReportDetailProps) {
 
       {/* Action History */}
       {report.adminActions.length > 0 && (
-        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Action History</h3>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Action History</h3>
           <div className="space-y-3">
             {report.adminActions.map((action: any) => (
               <div
                 key={action.id}
-                className="border-l-4 border-orange pl-4 py-2 bg-gray-50 rounded"
+                className="border-l-4 border-orange pl-4 py-2 bg-gray-50 dark:bg-gray-700 rounded"
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-white">
                       {getActionLabel(action.actionType)}
                     </p>
                     {action.description && (
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         {action.description}
                       </p>
                     )}
                   </div>
-                  <div className="text-right text-sm text-gray-500">
+                  <div className="text-right text-sm text-gray-500 dark:text-gray-400">
                     <p>{action.admin.name || "Admin"}</p>
                     <p>
                       {new Date(action.createdAt).toLocaleString("en-US")}
@@ -272,17 +272,17 @@ export default function ReportDetail({ report }: ReportDetailProps) {
       )}
 
       {/* Action Buttons */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Take Action</h3>
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Take Action</h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Action Reason (Optional)
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               rows={3}
               placeholder="Enter action reason..."
             />

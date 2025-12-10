@@ -7,8 +7,8 @@ import "react-quill/dist/quill.snow.css";
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
   loading: () => (
-    <div className="h-[300px] border border-gray-300 rounded-lg bg-white flex items-center justify-center">
-      <p className="text-gray-500">Loading editor...</p>
+    <div className="h-[300px] border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center">
+      <p className="text-gray-500 dark:text-gray-400">Loading editor...</p>
     </div>
   ),
 });
@@ -144,8 +144,8 @@ export default function RichTextEditor({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
-      <div className="border border-gray-300 rounded-lg overflow-hidden" style={{ minHeight: height }}>
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+      <div className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden" style={{ minHeight: height }}>
         {isMounted && (
           <ReactQuill
             theme="snow"
@@ -154,7 +154,7 @@ export default function RichTextEditor({
             modules={modules}
             formats={formats}
             placeholder={placeholder}
-            className="bg-white"
+            className="bg-white dark:bg-gray-800"
           />
         )}
       </div>

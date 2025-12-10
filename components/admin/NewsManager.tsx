@@ -124,62 +124,62 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
 
   return (
     <div className="grid lg:grid-cols-2 gap-8">
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
           {editingId ? "Edit News" : "Create News"}
         </h3>
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formState.title}
               onChange={(e) => setFormState((prev) => ({ ...prev, title: e.target.value }))}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Enter title"
             />
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
               <input
                 type="text"
                 value={formState.category}
                 onChange={(e) => setFormState((prev) => ({ ...prev, category: e.target.value }))}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 placeholder="e.g., Announcement, Event"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Publish Date</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Publish Date</label>
               <input
                 type="date"
                 value={formState.publishedAt}
                 onChange={(e) => setFormState((prev) => ({ ...prev, publishedAt: e.target.value }))}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Summary</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Summary</label>
             <textarea
               value={formState.summary}
               onChange={(e) => setFormState((prev) => ({ ...prev, summary: e.target.value }))}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               rows={2}
               placeholder="Enter news summary"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cover Image</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cover Image</label>
             <div className="space-y-2">
               <input
                 type="text"
                 value={formState.coverImage}
                 onChange={(e) => setFormState((prev) => ({ ...prev, coverImage: e.target.value }))}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 placeholder="https://example.com/image.jpg 또는 파일 업로드"
               />
               <div className="flex items-center gap-2">
@@ -241,7 +241,7 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
                 </div>
               )}
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               If no cover image is provided, the first image from the content will be used automatically.
             </p>
           </div>
@@ -256,9 +256,9 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
               type="checkbox"
               checked={formState.isPublished}
               onChange={(e) => setFormState((prev) => ({ ...prev, isPublished: e.target.checked }))}
-              className="h-4 w-4 text-navy focus:ring-navy border-gray-300 rounded"
+              className="h-4 w-4 text-navy dark:text-orange focus:ring-navy dark:focus:ring-orange border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
             />
-            <label htmlFor="news-published" className="text-sm text-gray-700">
+            <label htmlFor="news-published" className="text-sm text-gray-700 dark:text-gray-300">
               Publish on site
             </label>
           </div>
@@ -267,7 +267,7 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
               <button
                 type="button"
                 onClick={resetForm}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-800"
               >
                 New Article
               </button>
@@ -284,19 +284,19 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-900">News List</h3>
-          <span className="text-sm text-gray-500">{articles.length} articles</span>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">News List</h3>
+          <span className="text-sm text-gray-500 dark:text-gray-400">{articles.length} articles</span>
         </div>
         <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
           {articles.length === 0 && (
-            <p className="text-gray-500 text-sm">No news articles registered yet.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No news articles registered yet.</p>
           )}
           {articles.map((article) => (
             <div
               key={article.id}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
+              className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-sm transition-shadow bg-white dark:bg-gray-700"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -306,23 +306,23 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
                         {article.category}
                       </span>
                     )}
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {new Date(article.publishedAt).toLocaleDateString("en-US")}
                     </span>
                     {!article.isPublished && (
-                      <span className="text-xs font-medium text-red-500">Unpublished</span>
+                      <span className="text-xs font-medium text-red-500 dark:text-red-400">Unpublished</span>
                     )}
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-900">{article.title}</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{article.title}</h4>
                   {article.summary && (
-                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">{article.summary}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{article.summary}</p>
                   )}
                 </div>
                 <div className="flex flex-col gap-2">
                   <button
                     type="button"
                     onClick={() => handleEdit(article)}
-                    className="text-sm font-medium text-navy hover:text-navy-700"
+                    className="text-sm font-medium text-navy dark:text-navy-200 hover:text-navy-700 dark:hover:text-navy-300"
                   >
                     Edit
                   </button>
@@ -330,7 +330,7 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
                     type="button"
                     onClick={() => handleDelete(article.id)}
                     disabled={isDeleting === article.id}
-                    className="text-sm font-medium text-red-600 hover:text-red-700 disabled:opacity-50"
+                    className="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 disabled:opacity-50"
                   >
                     {isDeleting === article.id ? "Deleting..." : "Delete"}
                   </button>
