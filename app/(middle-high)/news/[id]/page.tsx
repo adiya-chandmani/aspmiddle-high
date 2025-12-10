@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -35,6 +36,15 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   return (
     <MiddleHighHeroLayout active="news">
       <article className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="mb-6">
+          <Link
+            href="/news"
+            className="text-sm text-gray-600 hover:text-orange transition-colors"
+          >
+            ← Back to List
+          </Link>
+        </div>
+
         <div className="space-y-3 mb-8">
           <p className="text-xs uppercase tracking-[0.3em] text-orange font-semibold">
             {article.category || "NEWS"}

@@ -20,6 +20,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.dark body {
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -33,12 +38,22 @@ body {
   flex-direction: column;
 }
 
+.dark .quill {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
 .quill .ql-toolbar {
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-bottom: none;
   border-radius: 4px 4px 0 0;
+}
+
+.dark .quill .ql-toolbar {
+  border-color: #475569;
+  background: #1e293b;
 }
 
 .quill .ql-container {
@@ -50,6 +65,12 @@ body {
   font-size: 16px;
   min-height: 300px;
   flex: 1;
+}
+
+.dark .quill .ql-container {
+  border-color: #475569;
+  background: #1e293b;
+  color: #f1f5f9;
 }
 
 .quill .ql-editor {
@@ -68,5 +89,9 @@ body {
 .quill .ql-editor.ql-blank::before {
   color: #9ca3af;
   font-style: normal;
+}
+
+.dark .quill .ql-editor.ql-blank::before {
+  color: #64748b;
 }
 

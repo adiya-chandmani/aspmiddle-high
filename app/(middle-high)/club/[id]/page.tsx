@@ -36,7 +36,7 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
             href="/club"
             className="text-sm text-gray-600 hover:text-orange transition-colors"
           >
-            ← 클럽 목록으로
+            ← Back to List
           </Link>
         </div>
 
