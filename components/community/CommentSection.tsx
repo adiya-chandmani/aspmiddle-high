@@ -169,8 +169,8 @@ export default function CommentSection({
 
   if (isQna && !canView) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="p-6 text-center text-gray-500">
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="p-6 text-center text-gray-500 dark:text-gray-400">
           This Q&A can only be viewed by the author and administrators.
         </div>
       </div>
@@ -178,32 +178,32 @@ export default function CommentSection({
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-      <div className="p-6 pb-4 border-b border-gray-200 bg-white">
-        <h2 className="text-xl font-semibold text-gray-900">
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="p-6 pb-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
           Comments {comments.length}
         </h2>
       </div>
 
       {/* Comment Form */}
       {canSubmit && (
-        <div className="p-6 border-b border-gray-200 bg-gray-50">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
           <form onSubmit={handleSubmit} className="space-y-3">
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy dark:focus:ring-orange focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               rows={3}
               placeholder="Enter your comment..."
               disabled={isSubmitting}
             />
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 text-sm text-gray-700">
+              <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                 <input
                   type="checkbox"
                   checked={isAnonymous}
                   onChange={(e) => setIsAnonymous(e.target.checked)}
-                  className="h-4 w-4 text-navy focus:ring-navy border-gray-300 rounded"
+                  className="h-4 w-4 text-navy dark:text-orange focus:ring-navy dark:focus:ring-orange border-gray-300 dark:border-gray-600 rounded"
                 />
                 Post as Anonymous
               </label>
@@ -222,26 +222,26 @@ export default function CommentSection({
       {/* Comment List */}
       {isLoading ? (
         <div className="p-8 text-center">
-          <p className="text-gray-500">Loading comments...</p>
+          <p className="text-gray-500 dark:text-gray-400">Loading comments...</p>
         </div>
       ) : comments.length === 0 ? (
         <div className="p-8 text-center">
-          <p className="text-gray-500">No comments yet.</p>
+          <p className="text-gray-500 dark:text-gray-400">No comments yet.</p>
         </div>
       ) : (
         <div>
           {comments.map((comment) => (
-            <div key={comment.id} className="p-6 border-b border-gray-100 last:border-0">
+            <div key={comment.id} className="p-6 border-b border-gray-100 dark:border-gray-700 last:border-0">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-gray-900 dark:text-white">
                     {comment.author.displayName}
                   </span>
-                  <span className="text-sm text-gray-500 ml-2">
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
                     {formatDate(comment.createdAt)}
                   </span>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-gray-500">
+                <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
                   {(comment.author.clerkUserId === userId || userRole === "ADMIN") && (
                     <button
                       onClick={() => handleDelete(comment.id)}
@@ -256,7 +256,7 @@ export default function CommentSection({
                   />
                 </div>
               </div>
-              <p className="text-gray-700 mt-2 whitespace-pre-wrap">{comment.content}</p>
+              <p className="text-gray-700 dark:text-gray-300 mt-2 whitespace-pre-wrap">{comment.content}</p>
             </div>
           ))}
         </div>

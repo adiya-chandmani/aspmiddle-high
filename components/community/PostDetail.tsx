@@ -214,18 +214,18 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
   if (loading) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600">Loading post...</p>
+        <p className="text-gray-600 dark:text-gray-400">Loading post...</p>
       </div>
     );
   }
 
   if (isForbidden) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="text-center py-16 px-6">
           <div className="mb-6">
             <svg
-              className="w-16 h-16 mx-auto text-gray-400"
+              className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -238,8 +238,8 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
               />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Secret Post</h2>
-          <p className="text-gray-600 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Secret Post</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
             This Q&A can only be viewed by the author and administrators.
           </p>
           <Link
@@ -256,10 +256,10 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
   if (!post) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600 mb-4">Post not found.</p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">Post not found.</p>
         <Link
           href={category === "QNA" ? "/qna" : "/community/student"}
-          className="text-navy hover:text-orange font-medium"
+          className="text-navy dark:text-orange hover:text-orange font-medium"
         >
           Back to List
         </Link>
@@ -268,11 +268,11 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* 게시물 헤더 */}
-      <div className="p-6 pb-4 bg-white border-b border-gray-200">
+      <div className="p-6 pb-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-start justify-between mb-4">
-          <h1 className="text-2xl font-semibold text-gray-900 flex-1">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white flex-1">
             {post.title}
           </h1>
           {(isAuthor || userRole === "ADMIN") && (
@@ -280,7 +280,7 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
               {isAuthor && (
                 <Link
                   href={category === "QNA" ? `/qna/${postId}/edit` : `/community/student/${postId}/edit`}
-                  className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                  className="px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
                 >
                   Edit
                 </Link>
@@ -295,52 +295,52 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
             </div>
           )}
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs font-medium">
+        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <span className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs font-medium">
             {categoryLabels[post.category] || post.category}
           </span>
-          <span className="text-gray-300">|</span>
+          <span className="text-gray-300 dark:text-gray-600">|</span>
           <span>{formatDate(post.createdAt)}</span>
-          <span className="text-gray-300">|</span>
+          <span className="text-gray-300 dark:text-gray-600">|</span>
           <span>{post.author.displayName}</span>
           <span className="text-gray-300 ml-auto">|</span>
           <span>Views {post.likeCount + post.commentCount + 1}</span>
-          <span className="text-gray-300">|</span>
+          <span className="text-gray-300 dark:text-gray-600">|</span>
           <span>Comments {post.commentCount}</span>
-          <span className="text-gray-300">|</span>
+          <span className="text-gray-300 dark:text-gray-600">|</span>
           <span>Likes {post.likeCount}</span>
-          <span className="text-gray-300">|</span>
+          <span className="text-gray-300 dark:text-gray-600">|</span>
           <ReportButton postId={postId} onReportSuccess={() => {}} />
         </div>
       </div>
 
       {/* 구분선 */}
-      <div className="border-t border-gray-200"></div>
+      <div className="border-t border-gray-200 dark:border-gray-700"></div>
 
       {/* 게시물 본문 */}
       <div className="p-6">
         <div
-          className="prose max-w-none text-gray-700 leading-relaxed"
+          className="prose max-w-none text-gray-700 dark:text-gray-300 leading-relaxed prose-headings:dark:text-white prose-p:dark:text-gray-300 prose-strong:dark:text-white"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </div>
 
       {/* 구분선 */}
-      <div className="border-t border-gray-200"></div>
+      <div className="border-t border-gray-200 dark:border-gray-700"></div>
 
       {/* 좋아요 버튼 */}
-      <div className="p-4 flex items-center justify-center gap-4 bg-gray-50">
+      <div className="p-4 flex items-center justify-center gap-4 bg-gray-50 dark:bg-gray-900">
         <button
           onClick={handleLike}
           disabled={isTogglingLike || !userId}
           className={`flex items-center gap-2 px-5 py-2 border rounded-md transition-colors ${
             isLiked
-              ? "bg-orange-50 border-orange text-orange hover:bg-orange-100"
-              : "bg-white border-gray-300 hover:bg-orange-50 hover:border-orange"
+              ? "bg-orange-50 dark:bg-orange-900/30 border-orange text-orange hover:bg-orange-100 dark:hover:bg-orange-900/40"
+              : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:border-orange"
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           <svg
-            className={`w-4 h-4 ${isLiked ? "text-orange" : "text-gray-600"}`}
+            className={`w-4 h-4 ${isLiked ? "text-orange" : "text-gray-600 dark:text-gray-400"}`}
             fill={isLiked ? "currentColor" : "none"}
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -352,7 +352,7 @@ export default function PostDetail({ postId, category }: PostDetailProps) {
               d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
             />
           </svg>
-          <span className={`text-sm font-medium ${isLiked ? "text-orange" : "text-gray-700"}`}>
+          <span className={`text-sm font-medium ${isLiked ? "text-orange" : "text-gray-700 dark:text-gray-300"}`}>
             {post.likeCount}
           </span>
         </button>

@@ -106,15 +106,15 @@ export default function PostCard({ post }: PostCardProps) {
       <div
         className={`flex items-start gap-4 p-4 transition-all cursor-pointer ${
           isViewed
-            ? "bg-gray-50 opacity-70 hover:opacity-90"
-            : "bg-white hover:bg-gray-50"
+            ? "bg-gray-50 dark:bg-gray-800 opacity-70 hover:opacity-90"
+            : "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
         }`}
       >
         {/* 좋아요 수 또는 자물쇠 아이콘 (왼쪽) */}
         <div className="flex flex-col items-center justify-center min-w-[45px] self-center">
           {post.category === "QNA" ? (
             <svg
-              className="w-4 h-4 text-gray-500"
+              className="w-4 h-4 text-gray-500 dark:text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -139,7 +139,7 @@ export default function PostCard({ post }: PostCardProps) {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-sm font-medium text-gray-700 mt-1">
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-1">
                 {post.likeCount}
               </span>
             </>
@@ -149,23 +149,23 @@ export default function PostCard({ post }: PostCardProps) {
         {/* 게시글 내용 */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs font-medium text-gray-700 bg-gray-100 px-2 py-0.5 rounded">
+            <span className="text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">
               {categoryLabels[post.category] || post.category}
             </span>
-            <span className="text-gray-300">|</span>
-            <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
-            <span className="text-gray-300">|</span>
-            <span className="text-xs text-gray-500">{post.author.displayName}</span>
+            <span className="text-gray-300 dark:text-gray-600">|</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(post.createdAt)}</span>
+            <span className="text-gray-300 dark:text-gray-600">|</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{post.author.displayName}</span>
           </div>
           <h3
             className={`text-base font-semibold mb-1 line-clamp-2 ${
-              isViewed ? "text-gray-500" : "text-gray-900"
+              isViewed ? "text-gray-500 dark:text-gray-500" : "text-gray-900 dark:text-white"
             }`}
           >
             {post.title}
           </h3>
           {post.commentCount > 0 && (
-            <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+            <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 mt-1">
               <svg
                 className="w-3 h-3"
                 fill="none"

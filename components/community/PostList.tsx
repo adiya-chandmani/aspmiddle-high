@@ -82,7 +82,7 @@ export default function PostList({ category = "all", hot = false, mine = false }
   if (loading) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600">Loading posts...</p>
+        <p className="text-gray-600 dark:text-gray-400">Loading posts...</p>
       </div>
     );
   }
@@ -96,10 +96,10 @@ export default function PostList({ category = "all", hot = false, mine = false }
         : "/community/student/write";
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600 mb-4">No posts yet.</p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">No posts yet.</p>
         <Link
           href={writeHref}
-          className="text-navy hover:text-orange font-medium"
+          className="text-navy dark:text-orange hover:text-orange font-medium"
         >
           Write First Post
         </Link>
@@ -109,9 +109,9 @@ export default function PostList({ category = "all", hot = false, mine = false }
 
   return (
     <div>
-      <div className="space-y-0 border border-gray-200 rounded-md overflow-hidden bg-white">
+      <div className="space-y-0 border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden bg-white dark:bg-gray-800">
         {posts.map((post) => (
-          <div key={post.id} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+          <div key={post.id} className="border-b border-gray-100 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <PostCard post={post} />
           </div>
         ))}
@@ -123,17 +123,17 @@ export default function PostList({ category = "all", hot = false, mine = false }
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
           >
             Previous
           </button>
-          <span className="px-4 py-2 text-gray-700">
+          <span className="px-4 py-2 text-gray-700 dark:text-gray-300">
             {page} / {totalPages}
           </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
           >
             Next
           </button>
