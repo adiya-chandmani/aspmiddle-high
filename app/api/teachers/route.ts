@@ -49,9 +49,9 @@ export async function POST(request: NextRequest) {
     }
 
     const role = await getUserRole(currentUserId);
-    if (role !== "ADMIN" && role !== "STAFF") {
+    if (role !== "ADMIN") {
       return NextResponse.json(
-        { error: "Only admins and staff can create teacher profiles." },
+        { error: "Only admins can create teacher profiles." },
         { status: 403 }
       );
     }

@@ -13,6 +13,7 @@ export default function AdminNav() {
     { href: "/admin/news", label: "News" },
     { href: "/admin/clubs", label: "Club Sections" },
     { href: "/admin/teachers", label: "Teachers" },
+    { href: "/admin/faqs", label: "FAQs" },
     { href: "/admin/users", label: "User Roles" },
   ];
 

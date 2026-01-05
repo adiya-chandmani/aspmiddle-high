@@ -25,8 +25,8 @@ export default async function AdminTeacherNewPage() {
   }
 
   const role = await getUserRole(userId);
-  // Only ADMIN and STAFF can add new teacher profiles
-  if (role !== "ADMIN" && role !== "STAFF") {
+  // Only ADMIN can add new teacher profiles
+  if (role !== "ADMIN") {
     redirect("/admin");
   }
 

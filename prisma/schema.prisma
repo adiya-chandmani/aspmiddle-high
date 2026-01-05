@@ -278,3 +278,17 @@ model Suggestion {
 
   @@map("suggestions")
 }
+
+// FAQ (Frequently Asked Questions) 테이블
+model FAQ {
+  id          String   @id @default(cuid())
+  question    String
+  answer      String   @db.Text
+  category    String?  // Optional category for grouping FAQs
+  order       Int      @default(0) // For ordering FAQs
+  isPublished Boolean  @default(true) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("faqs")
+}

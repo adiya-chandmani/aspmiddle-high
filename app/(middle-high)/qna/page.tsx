@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import PostList from "@/components/community/PostList";
+import FAQList from "@/components/community/FAQList";
 import Link from "next/link";
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 
 export default function QnaPage() {
-  const [activeTab, setActiveTab] = useState<"QNA" | "MINE">("QNA");
+  const [activeTab, setActiveTab] = useState<"FAQ" | "QNA" | "MINE">("FAQ");
 
   return (
     <MiddleHighHeroLayout active="qna">
@@ -17,20 +18,34 @@ export default function QnaPage() {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Q&A</h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Ask questions to the school and administrators. Questions can only be viewed by the author and administrators.
+                  {activeTab === "FAQ"
+                    ? "Frequently asked questions and answers."
+                    : "Ask questions to the school and administrators. Questions can only be viewed by the author and administrators."}
                 </p>
               </div>
-              <Link
-                href="/qna/write"
-                className="px-5 py-2.5 bg-orange text-white rounded-md hover:bg-orange-700 transition-colors font-medium text-sm shadow-sm hover:shadow"
-              >
-                Ask Question
-              </Link>
+              {activeTab !== "FAQ" && (
+                <Link
+                  href="/qna/write"
+                  className="px-5 py-2.5 bg-orange text-white rounded-md hover:bg-orange-700 transition-colors font-medium text-sm shadow-sm hover:shadow"
+                >
+                  Ask Question
+                </Link>
+              )}
             </div>
           </div>
 
           <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-6">
             <div className="flex space-x-1">
+              <button
+                onClick={() => setActiveTab("FAQ")}
+                className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === "FAQ"
+                    ? "text-navy dark:text-orange border-orange bg-white dark:bg-gray-800"
+                    : "text-gray-600 dark:text-gray-400 border-transparent hover:text-orange hover:border-orange"
+                }`}
+              >
+                FAQ
+              </button>
               <button
                 onClick={() => setActiveTab("QNA")}
                 className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
@@ -55,7 +70,11 @@ export default function QnaPage() {
           </div>
 
           <div className="p-6">
-            <PostList category="QNA" mine={activeTab === "MINE"} />
+            {activeTab === "FAQ" ? (
+              <FAQList />
+            ) : (
+              <PostList category="QNA" mine={activeTab === "MINE"} />
+            )}
           </div>
         </div>
       </div>
