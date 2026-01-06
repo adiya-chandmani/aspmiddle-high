@@ -41,13 +41,23 @@ export default function TeacherProfileEditor({
   });
   const [userId, setUserId] = useState<string>(""); // 새로운 teacher 추가 시 사용할 userId
 
+  const isAdminCreate = isAdminEdit && !teacherId;
+
   const fetchTeacherData = useCallback(async () => {
     try {
       setLoading(true);
-      // Admin/Staff가 다른 선생님 프로필을 편집하는 경우
-      const apiUrl = isAdminEdit && teacherId 
-        ? `/api/teachers/${teacherId}`
+      // Admin이 기존 선생님 프로필을 편집하는 경우에만 데이터 로드
+      const apiUrl = isAdminEdit
+        ? teacherId
+          ? `/api/teachers/${teacherId}`
+          : null
         : "/api/teachers/me";
+
+      // Admin이 새 선생님을 추가하는 경우에는 초기 데이터 로드 생략
+      if (!apiUrl) {
+        setLoading(false);
+        return;
+      }
       
       const response = await fetch(apiUrl, {
         cache: "no-store", // 캐시 사용 안 함으로 즉시 최신 데이터 가져오기
@@ -121,29 +131,60 @@ export default function TeacherProfileEditor({
     setSaving(true);
 
     try {
-      // Admin/Staff가 다른 선생님 프로필을 편집하는 경우
-      const apiUrl = isAdminEdit && teacherId 
-        ? `/api/teachers/${teacherId}`
-        : "/api/teachers/me";
-      
-      const response = await fetch(apiUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        cache: "no-store", // 캐시 사용 안 함
-        body: JSON.stringify({
+      let apiUrl = "";
+      let method: "POST" | "PUT" = "PUT";
+      let body: any = {};
+
+      if (isAdminEdit) {
+        if (teacherId) {
+          // Admin edits existing teacher
+          apiUrl = `/api/teachers/${teacherId}`;
+          method = "PUT";
+          body = {
+            name: formData.name,
+            subject: formData.subject,
+            email: formData.email,
+            bio: formData.bio,
+            profileImage: formData.profileImage,
+          };
+        } else {
+          // Admin creates a new teacher
+          apiUrl = "/api/teachers";
+          method = "POST";
+          body = {
+            userId: userId || null,
+            name: formData.name,
+            subject: formData.subject,
+            email: formData.email,
+            bio: formData.bio,
+            profileImage: formData.profileImage,
+          };
+        }
+      } else {
+        // Teacher updates own profile
+        apiUrl = "/api/teachers/me";
+        method = "PUT";
+        body = {
           name: formData.name,
           subject: formData.subject,
           email: formData.email,
           bio: formData.bio,
           profileImage: formData.profileImage,
-        }),
+        };
+      }
+
+      const response = await fetch(apiUrl, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store", // 캐시 사용 안 함
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: "Failed to update profile." }));
-        throw new Error(errorData.error || "Failed to update profile.");
+        const errorData = await response.json().catch(() => ({ error: isAdminCreate ? "Failed to create teacher profile." : "Failed to update profile." }));
+        throw new Error(errorData.error || (isAdminCreate ? "Failed to create teacher profile." : "Failed to update profile."));
       }
 
       const updatedData = await response.json();
@@ -223,11 +264,11 @@ export default function TeacherProfileEditor({
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* User ID (새로운 teacher 추가 시에만 표시) */}
-        {isAdminEdit && !teacherId && (
+        {/* User ID (새로운 teacher 추가 시 선택적으로 표시) */}
+        {isAdminCreate && (
           <div>
             <label htmlFor="userId" className="block text-sm font-medium text-gray-700 mb-2">
-              User ID (Clerk User ID) <span className="text-red-500">*</span>
+              User ID (Clerk User ID, optional)
             </label>
             <input
               type="text"
@@ -235,11 +276,10 @@ export default function TeacherProfileEditor({
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
-              placeholder="Enter Clerk User ID"
-              required={isAdminEdit && !teacherId}
+              placeholder="Enter Clerk User ID (leave empty for unlinked teacher)"
             />
             <p className="text-xs text-gray-500 mt-1">
-              Enter the Clerk User ID of the user you want to create a teacher profile for.
+              If you enter a Clerk User ID, the teacher profile will be linked to that user. If you leave it empty, the teacher will not be linked to any account.
             </p>
           </div>
         )}

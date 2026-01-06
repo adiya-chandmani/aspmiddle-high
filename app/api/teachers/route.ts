@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST: 새로운 선생님 프로필 생성 (ADMIN, STAFF만 가능)
+// POST: 새로운 선생님 프로필 생성 (ADMIN만 가능, userId는 선택 사항)
 export async function POST(request: NextRequest) {
   try {
     const { userId: currentUserId } = await auth();
@@ -60,12 +60,6 @@ export async function POST(request: NextRequest) {
     const { userId, name, subject, email, bio, profileImage } = body;
 
     // 입력 검증
-    if (!userId || !userId.trim()) {
-      return NextResponse.json(
-        { error: "User ID is required." },
-        { status: 400 }
-      );
-    }
 
     if (!name || !name.trim()) {
       return NextResponse.json(
@@ -74,35 +68,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 사용자가 존재하는지 확인
-    const user = await prisma.user.findUnique({
-      where: { clerkUserId: userId },
-    });
+    // userId가 제공된 경우에만 사용자와 연결
+    let normalizedUserId: string | null = null;
+    if (userId && typeof userId === "string" && userId.trim().length > 0) {
+      normalizedUserId = userId.trim();
 
-    if (!user) {
-      return NextResponse.json(
-        { error: "User not found. Please ensure the user is registered in the system." },
-        { status: 404 }
-      );
-    }
+      // 사용자가 존재하는지 확인
+      const user = await prisma.user.findUnique({
+        where: { clerkUserId: normalizedUserId },
+      });
 
-    // 이미 teacher 프로필이 있는지 확인 (활성화 여부와 관계없이)
-    const existingTeacher = await prisma.teacher.findUnique({
-      where: { userId },
-    });
+      if (!user) {
+        return NextResponse.json(
+          { error: "User not found. Please ensure the user is registered in the system." },
+          { status: 404 }
+        );
+      }
 
-    if (existingTeacher) {
-      // 이미 존재하는 경우 (활성화 여부와 관계없이) 에러 반환
-      return NextResponse.json(
-        { error: `Teacher profile already exists for this user. Please use a different user ID or edit the existing profile.` },
-        { status: 409 }
-      );
+      // 이미 teacher 프로필이 있는지 확인 (활성화 여부와 관계없이)
+      const existingTeacher = await prisma.teacher.findUnique({
+        where: { userId: normalizedUserId },
+      });
+
+      if (existingTeacher) {
+        // 이미 존재하는 경우 (활성화 여부와 관계없이) 에러 반환
+        return NextResponse.json(
+          { error: `Teacher profile already exists for this user. Please use a different user ID or edit the existing profile.` },
+          { status: 409 }
+        );
+      }
     }
 
     // 새로운 teacher 프로필 생성
     const teacher = await prisma.teacher.create({
       data: {
-        userId,
+        userId: normalizedUserId,
         name: name.trim(),
         subject: subject?.trim() || null,
         email: email?.trim() || null,

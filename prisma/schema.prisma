@@ -249,7 +249,7 @@ model ClubArticle {
 // 선생님 정보 테이블
 model Teacher {
   id          String   @id @default(cuid())
-  userId      String   @unique @map("user_id") // User의 clerkUserId와 연결
+  userId      String?  @unique @map("user_id") // User의 clerkUserId와 연결 (optional for admin-created teachers)
   name        String
   subject     String?
   email       String?
@@ -259,7 +259,7 @@ model Teacher {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  user        User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
 
   @@map("teachers")
 }
