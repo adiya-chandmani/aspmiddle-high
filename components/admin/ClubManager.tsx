@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import RichTextEditor from "./RichTextEditor";
 
 export interface ClubArticle {
@@ -262,10 +263,12 @@ export default function ClubManager({ initialArticles }: ClubManagerProps) {
               </div>
               {formState.coverImage && (
                 <div className="relative w-full h-32 border border-gray-300 rounded-md overflow-hidden">
-                  <img
+                  <Image
                     src={formState.coverImage}
                     alt="Preview"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
               )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import RichTextEditor from "./RichTextEditor";
 
 export interface NewsArticle {
@@ -233,10 +234,12 @@ export default function NewsManager({ initialArticles }: NewsManagerProps) {
               </div>
               {formState.coverImage && (
                 <div className="relative w-full h-32 border border-gray-300 rounded-md overflow-hidden">
-                  <img
+                  <Image
                     src={formState.coverImage}
                     alt="Preview"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
               )}

@@ -279,7 +279,7 @@ export default function TeacherProfileEditor({
               placeholder="Leave empty to create teacher without user account"
             />
             <p className="text-xs text-gray-500 mt-1">
-              You can create a teacher profile without linking it to a Clerk user account. Simply leave this field empty and fill in the teacher's information below.
+              You can create a teacher profile without linking it to a Clerk user account. Simply leave this field empty and fill in the teacher&apos;s information below.
             </p>
           </div>
         )}
