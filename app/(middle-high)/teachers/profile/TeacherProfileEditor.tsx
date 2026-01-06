@@ -152,7 +152,7 @@ export default function TeacherProfileEditor({
           apiUrl = "/api/teachers";
           method = "POST";
           body = {
-            userId: userId || null,
+            userId: userId && userId.trim() ? userId.trim() : null,
             name: formData.name,
             subject: formData.subject,
             email: formData.email,
@@ -268,7 +268,7 @@ export default function TeacherProfileEditor({
         {isAdminCreate && (
           <div>
             <label htmlFor="userId" className="block text-sm font-medium text-gray-700 mb-2">
-              User ID (Clerk User ID, optional)
+              Clerk User ID <span className="text-gray-400 text-xs font-normal">(Optional - Leave empty to create standalone teacher profile)</span>
             </label>
             <input
               type="text"
@@ -276,10 +276,10 @@ export default function TeacherProfileEditor({
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-navy focus:outline-none"
-              placeholder="Enter Clerk User ID (leave empty for unlinked teacher)"
+              placeholder="Leave empty to create teacher without user account"
             />
             <p className="text-xs text-gray-500 mt-1">
-              If you enter a Clerk User ID, the teacher profile will be linked to that user. If you leave it empty, the teacher will not be linked to any account.
+              You can create a teacher profile without linking it to a Clerk user account. Simply leave this field empty and fill in the teacher's information below.
             </p>
           </div>
         )}
