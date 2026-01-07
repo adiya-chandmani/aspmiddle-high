@@ -97,6 +97,10 @@ export default function Header() {
             >
               TEACHERS
             </Link>
+            <Link href="/staff" className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
+            >
+              STAFF
+            </Link>
             <Link
               href="/club"
               className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
