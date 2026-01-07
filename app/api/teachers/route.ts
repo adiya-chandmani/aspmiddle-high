@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { userId, name, subject, email, bio, profileImage } = body;
+    const { userId, name, subject, email, bio, profileImage, type } = body;
 
     // 입력 검증
 
@@ -99,7 +99,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 새로운 teacher 프로필 생성
+    const teacherType = type === "STAFF" ? "STAFF" : "TEACHER";
+
+    // 새로운 teacher/staff 프로필 생성
     const teacher = await prisma.teacher.create({
       data: {
         userId: normalizedUserId,
@@ -108,6 +110,7 @@ export async function POST(request: NextRequest) {
         email: email?.trim() || null,
         bio: bio?.trim() || null,
         profileImage: profileImage?.trim() || null,
+        type: teacherType,
       },
     });
 
