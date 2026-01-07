@@ -22,21 +22,26 @@ interface ClubManagerProps {
 }
 
 const sectionPresets = [
-  "VEX",
-  "Code Combat",
-  "News Paper",
-  "Chess",
-  "Band",
-  "AMC 8",
-  "Biology",
-  "Model UN",
-  "Public Speaking",
-  "HSK 3rd",
+  "Math Kangaroo G7-G8 Test Prep",
+  "Science Club",
+  "Newspaper",
+  "Math Homework Help",
+  "HSK Prep",
+  "MHS Band",
+  "ELA Homework Help",
+  "Harvard Political Review Essay Competition / Global Issues Debate",
+  "VEX V5 Robotics",
+  "Aerial Drone Competition",
+  "Game Development Coding",
+  "Social Media Club",
+  "Yearbook",
+  "Basketball Free Play",
   "Student Government",
-  "Sat Math",
-  "NHS",
   "Study Hall",
+  "AP Calculus Prep",
+  "National Honors Society",
 ];
+
 
 const defaultFormState = {
   title: "",
