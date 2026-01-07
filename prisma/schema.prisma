@@ -165,6 +165,11 @@ enum AdminActionType {
   SUSPEND   // 계정 정지
 }
 
+enum TeacherType {
+  TEACHER
+  STAFF
+}
+
 // 입학 문의 테이블
 model AdmissionInquiry {
   id          String   @id @default(cuid())
@@ -250,6 +255,7 @@ model ClubArticle {
 model Teacher {
   id          String   @id @default(cuid())
   userId      String?  @unique @map("user_id") // User의 clerkUserId와 연결 (optional for admin-created teachers)
+  type        TeacherType @default(TEACHER)
   name        String
   subject     String?
   email       String?

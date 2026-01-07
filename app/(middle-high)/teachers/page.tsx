@@ -15,6 +15,7 @@ export default async function TeachersPage() {
   const teachers = await prisma.teacher.findMany({
     where: {
       isActive: true,
+      type: "TEACHER",
     },
     orderBy: {
       name: "asc",

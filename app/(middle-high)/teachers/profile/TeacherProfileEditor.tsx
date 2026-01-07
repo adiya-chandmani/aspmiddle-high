@@ -17,12 +17,14 @@ interface TeacherProfileEditorProps {
   userRole?: string;
   teacherId?: string; // Admin/Staff가 다른 선생님 프로필 편집 시 사용
   isAdminEdit?: boolean; // Admin/Staff가 편집하는지 여부
+  initialType?: "TEACHER" | "STAFF";
 }
 
 export default function TeacherProfileEditor({ 
   userRole, 
   teacherId, 
-  isAdminEdit = false 
+  isAdminEdit = false,
+  initialType = "TEACHER",
 }: TeacherProfileEditorProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -158,6 +160,7 @@ export default function TeacherProfileEditor({
             email: formData.email,
             bio: formData.bio,
             profileImage: formData.profileImage,
+            type: initialType,
           };
         }
       } else {
