@@ -146,7 +146,9 @@ export default function MiddleHighAboutContent() {
             {/* Cognia */}
             <div className="bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="relative w-full h-64 rounded-lg overflow-hidden bg-white dark:bg-gray-700 p-2">
-                <div className="relative w-full h-full overflow-hidden rounded-md border-[6px] border-black">
+                {/* Mimic certificate-style double frame (outer light frame + inner black lines) */}
+                <div className="relative w-full h-full overflow-hidden rounded-md border-2 border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-700">
+                  <div className="relative w-full h-full overflow-hidden rounded border-4 border-black ring-2 ring-black ring-offset-2 ring-offset-white dark:ring-offset-gray-700">
                   <Image
                     src="/cert4.png"
                     alt="Cognia Accreditation Certificate"
@@ -154,6 +156,7 @@ export default function MiddleHighAboutContent() {
                     className="object-contain"
                     unoptimized
                   />
+                  </div>
                 </div>
               </div>
             </div>
