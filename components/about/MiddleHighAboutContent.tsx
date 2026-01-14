@@ -143,19 +143,16 @@ export default function MiddleHighAboutContent() {
               </div>
             </div>
 
-            {/* CollegeBoard */}
-            <div className="bg-white border-2 border-gray-300 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-              <div className="relative w-full h-52 rounded-lg overflow-hidden mb-0">
+            {/* Cognia */}
+            <div className="bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="relative w-full h-64 rounded-lg overflow-hidden">
                 <Image
-                  src="/share-image.avif"
-                  alt="CollegeBoard CEEB Code"
+                  src="/cert3.png"
+                  alt="Cognia Accreditation Certificate"
                   fill
-                  className="object-contain object-center"
+                  className="object-contain"
                   unoptimized
                 />
-              </div>
-              <div className="text-center -mt-2">
-                <p className="text-2xl font-bold text-gray-800 dark:text-white">CEEB: 682063</p>
               </div>
             </div>
           </div>
