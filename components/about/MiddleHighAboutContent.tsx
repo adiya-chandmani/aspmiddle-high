@@ -145,14 +145,16 @@ export default function MiddleHighAboutContent() {
 
             {/* Cognia */}
             <div className="bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="relative w-full h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="/cert3.png"
-                  alt="Cognia Accreditation Certificate"
-                  fill
-                  className="object-contain"
-                  unoptimized
-                />
+              <div className="relative w-full h-64 rounded-lg overflow-hidden bg-white dark:bg-gray-700 p-2">
+                <div className="relative w-full h-full overflow-hidden rounded-md border-[6px] border-black">
+                  <Image
+                    src="/cert4.png"
+                    alt="Cognia Accreditation Certificate"
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
               </div>
             </div>
           </div>
