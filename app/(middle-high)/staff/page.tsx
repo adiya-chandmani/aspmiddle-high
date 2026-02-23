@@ -20,16 +20,20 @@ export default async function MatriculationPage() {
   return (
     <MiddleHighHeroLayout active="matriculation">
       <div className="container mx-auto px-4 py-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold">Matriculation</h1>
-          <p className="text-gray-600 mt-2">
+        <div className="mb-10">
+          <div className="inline-flex items-center gap-3">
+            <h1 className="text-4xl font-bold text-navy">Matriculation</h1>
+            <span className="h-2 w-2 rounded-full bg-orange" />
+          </div>
+          <p className="text-gray-600 mt-2 max-w-2xl">
             University placements and matriculation outcomes.
           </p>
+          <div className="mt-4 h-1 w-20 bg-orange rounded-full" />
         </div>
 
         {records.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-10 text-center">
-            <h2 className="text-2xl font-semibold mb-3">No results published yet</h2>
+          <div className="bg-white rounded-lg border border-navy-100 shadow-sm p-10 text-center">
+            <h2 className="text-2xl font-semibold mb-3 text-navy">No results published yet</h2>
             <p className="text-gray-700">Please check back soon.</p>
           </div>
         ) : (
@@ -42,21 +46,21 @@ export default async function MatriculationPage() {
               const uniqueUniversities = new Set(list.map((r) => r.university)).size;
 
               const Card = ({ r }: { r: (typeof records)[number] }) => (
-                <div className="rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow bg-white">
+                <div className="rounded-lg border border-navy-100 p-4 hover:shadow-md hover:border-orange transition-shadow bg-white">
                   <div className="flex items-start gap-3">
                     {r.logoUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={r.logoUrl}
                         alt={`${r.university} logo`}
-                        className="w-10 h-10 object-contain rounded bg-white border border-gray-100 flex-shrink-0"
+                        className="w-10 h-10 object-contain rounded bg-white border border-navy-100 flex-shrink-0"
                       />
                     ) : (
-                      <div className="w-10 h-10 rounded bg-gray-100 border border-gray-200 flex-shrink-0" />
+                      <div className="w-10 h-10 rounded bg-navy-50 border border-navy-100 flex-shrink-0" />
                     )}
 
                     <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 truncate">{r.university}</p>
+                      <p className="font-semibold text-navy truncate">{r.university}</p>
                       {(r.country || r.program) && (
                         <p className="text-sm text-gray-600 mt-1">
                           {[r.country, r.program].filter(Boolean).join(" • ")}
@@ -69,15 +73,15 @@ export default async function MatriculationPage() {
                       )}
 
                       {r.note && (
-                        <div className="mt-3 pt-3 border-t border-gray-100">
+                        <div className="mt-3 pt-3 border-t border-navy-50">
                           <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{r.note}</p>
                         </div>
                       )}
 
                       {r.acceptances && r.outcome === "MATRICULATED" && (
-                        <div className="mt-3 pt-3 border-t border-gray-100">
+                        <div className="mt-3 pt-3 border-t border-navy-50">
                           <div className="flex items-center justify-between gap-3">
-                            <p className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
+                            <p className="text-xs font-semibold tracking-wide text-navy uppercase">
                               University Acceptances
                             </p>
                           </div>
@@ -89,7 +93,7 @@ export default async function MatriculationPage() {
                               .map((u, idx) => (
                                 <span
                                   key={`${r.id}-acc-${idx}`}
-                                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
+                                  className="text-xs px-2 py-1 rounded-full bg-orange-50 text-navy border border-orange-200"
                                 >
                                   {u}
                                 </span>
@@ -104,10 +108,10 @@ export default async function MatriculationPage() {
 
               return (
                 <section key={year} className="bg-gray-50">
-                  <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-                    <div className="p-6 border-b border-gray-100">
+                  <div className="bg-white rounded-lg border border-navy-100 shadow-sm">
+                    <div className="p-6 border-b border-navy-50">
                       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2">
-                        <h2 className="text-2xl font-bold">Class of {year}</h2>
+                        <h2 className="text-2xl font-bold text-navy">Class of {year}</h2>
                         <p className="text-sm text-gray-600">
                           {list.length} total · {uniqueUniversities} universit{uniqueUniversities === 1 ? "y" : "ies"}
                         </p>
@@ -116,8 +120,10 @@ export default async function MatriculationPage() {
 
                     <div className="p-6">
                       <div className="flex items-baseline justify-between mb-4">
-                        <h3 className="text-xl font-semibold">Matriculations</h3>
-                        <p className="text-sm text-gray-600">{list.length}</p>
+                        <h3 className="text-xl font-semibold text-navy">Matriculations</h3>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-orange-50 text-navy border border-orange-200 text-sm">
+                          {list.length}
+                        </span>
                       </div>
 
                       {list.length === 0 ? (
