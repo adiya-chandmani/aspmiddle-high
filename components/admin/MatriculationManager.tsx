@@ -6,6 +6,8 @@ type MatriculationRecord = {
   id: string;
   year: number;
   university: string;
+  outcome: "ACCEPTED" | "MATRICULATED";
+  logoUrl: string | null;
   country: string | null;
   studentName: string | null;
   program: string | null;
@@ -41,6 +43,8 @@ export default function MatriculationManager({
   const [form, setForm] = useState({
     year: new Date().getFullYear(),
     university: "",
+    outcome: "MATRICULATED" as "ACCEPTED" | "MATRICULATED",
+    logoUrl: "",
     country: "",
     studentName: "",
     program: "",
@@ -70,6 +74,8 @@ export default function MatriculationManager({
         body: JSON.stringify({
           year: Number(form.year),
           university: form.university,
+          outcome: form.outcome,
+          logoUrl: form.logoUrl || null,
           country: form.country || null,
           studentName: form.studentName || null,
           program: form.program || null,
@@ -83,7 +89,18 @@ export default function MatriculationManager({
         throw new Error(err.error || "Failed to create record");
       }
 
-      setForm((f) => ({ ...f, university: "", country: "", studentName: "", program: "", note: "", order: 0, isPublished: true }));
+      setForm((f) => ({
+        ...f,
+        university: "",
+        outcome: "MATRICULATED",
+        logoUrl: "",
+        country: "",
+        studentName: "",
+        program: "",
+        note: "",
+        order: 0,
+        isPublished: true,
+      }));
       await refresh();
     } finally {
       setSaving(false);
@@ -138,6 +155,34 @@ export default function MatriculationManager({
               value={form.university}
               onChange={(e) => setForm((f) => ({ ...f, university: e.target.value }))}
               placeholder="e.g., Seoul National University"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-sm text-gray-700 dark:text-gray-300">Outcome</span>
+            <select
+              className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900"
+              value={form.outcome}
+              onChange={(e) =>
+                setForm((f) => ({
+                  ...f,
+                  outcome: e.target.value as "ACCEPTED" | "MATRICULATED",
+                }))
+              }
+            >
+              <option value="ACCEPTED">Accepted</option>
+              <option value="MATRICULATED">Matriculated</option>
+            </select>
+          </label>
+
+          <label className="block">
+            <span className="text-sm text-gray-700 dark:text-gray-300">University logo URL (optional)</span>
+            <input
+              type="url"
+              className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900"
+              value={form.logoUrl}
+              onChange={(e) => setForm((f) => ({ ...f, logoUrl: e.target.value }))}
+              placeholder="https://..."
             />
           </label>
 
@@ -245,6 +290,8 @@ export default function MatriculationManager({
             <thead>
               <tr className="text-left border-b border-gray-200 dark:border-gray-700">
                 <th className="py-2 pr-3">Year</th>
+                <th className="py-2 pr-3">Outcome</th>
+                <th className="py-2 pr-3">Logo</th>
                 <th className="py-2 pr-3">University</th>
                 <th className="py-2 pr-3">Country</th>
                 <th className="py-2 pr-3">Student</th>
@@ -258,6 +305,51 @@ export default function MatriculationManager({
               {filtered.map((r) => (
                 <tr key={r.id} className="border-b border-gray-100 dark:border-gray-700">
                   <td className="py-2 pr-3">{r.year}</td>
+                  <td className="py-2 pr-3">
+                    <select
+                      className="w-36 rounded-md border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+                      value={r.outcome}
+                      onChange={async (e) => {
+                        const next = e.target.value as "ACCEPTED" | "MATRICULATED";
+                        setRecords((prev) => prev.map((x) => (x.id === r.id ? { ...x, outcome: next } : x)));
+                        try {
+                          await updateRecord(r.id, { outcome: next });
+                        } catch (err: any) {
+                          alert(err.message);
+                        }
+                      }}
+                    >
+                      <option value="ACCEPTED">Accepted</option>
+                      <option value="MATRICULATED">Matriculated</option>
+                    </select>
+                  </td>
+                  <td className="py-2 pr-3">
+                    <div className="flex items-center gap-2">
+                      <input
+                        className="w-56 rounded-md border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+                        value={r.logoUrl || ""}
+                        onChange={(e) =>
+                          setRecords((prev) => prev.map((x) => (x.id === r.id ? { ...x, logoUrl: e.target.value } : x)))
+                        }
+                        onBlur={async () => {
+                          try {
+                            await updateRecord(r.id, { logoUrl: r.logoUrl });
+                          } catch (e: any) {
+                            alert(e.message);
+                          }
+                        }}
+                        placeholder="https://..."
+                      />
+                      {r.logoUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={r.logoUrl}
+                          alt="logo"
+                          className="w-7 h-7 object-contain rounded bg-white border border-gray-100"
+                        />
+                      )}
+                    </div>
+                  </td>
                   <td className="py-2 pr-3">
                     <input
                       className="w-64 rounded-md border-gray-200 dark:border-gray-700 dark:bg-gray-900"
@@ -376,7 +468,7 @@ export default function MatriculationManager({
 
               {filtered.length === 0 && (
                 <tr>
-                  <td className="py-8 text-gray-500" colSpan={8}>
+                  <td className="py-8 text-gray-500" colSpan={10}>
                     No records yet.
                   </td>
                 </tr>

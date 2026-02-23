@@ -35,10 +35,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Please enter a university." }, { status: 400 });
     }
 
+    const outcome = body.outcome === "ACCEPTED" ? "ACCEPTED" : "MATRICULATED";
+
     const record = await prisma.matriculationRecord.create({
       data: {
         year,
         university: String(body.university).trim(),
+        outcome,
+        logoUrl: body.logoUrl ? String(body.logoUrl).trim() : null,
         country: body.country ? String(body.country).trim() : null,
         studentName: body.studentName ? String(body.studentName).trim() : null,
         program: body.program ? String(body.program).trim() : null,

@@ -299,20 +299,28 @@ model FAQ {
   @@map("faqs")
 }
 
-// Matriculation outcomes (university placements)
+enum MatriculationOutcome {
+  ACCEPTED
+  MATRICULATED
+}
+
+// University acceptances & matriculation outcomes
 model MatriculationRecord {
-  id          String   @id @default(cuid())
+  id          String               @id @default(cuid())
   year        Int
   university  String
+  outcome     MatriculationOutcome @default(MATRICULATED)
+  logoUrl     String?              @map("logo_url")
   country     String?
-  studentName String?  @map("student_name")
+  studentName String?              @map("student_name")
   program     String?
-  note        String?  @db.Text
-  order       Int      @default(0)
-  isPublished Boolean  @default(true) @map("is_published")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  note        String?              @db.Text
+  order       Int                  @default(0)
+  isPublished Boolean              @default(true) @map("is_published")
+  createdAt   DateTime             @default(now()) @map("created_at")
+  updatedAt   DateTime             @updatedAt @map("updated_at")
 
   @@index([year])
+  @@index([outcome])
   @@map("matriculation_records")
 }
