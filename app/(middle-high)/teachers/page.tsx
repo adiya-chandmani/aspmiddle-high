@@ -1,6 +1,7 @@
 import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
 import { prisma } from "@/lib/db";
 import Image from "next/image";
+import BioText from "./BioText";
 
 export const metadata = {
   title: "Faculty & Staff | School Web Platform",
@@ -51,13 +52,7 @@ function PersonCard({ person, fallbackLetter }: { person: Person; fallbackLetter
       <div className="text-center">
         {person.email && <p className="text-sm text-gray-600 mb-3">{person.email}</p>}
 
-        {person.bio && (
-          <div className="mt-2 pt-3 border-t border-gray-100">
-            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line line-clamp-5">
-              {person.bio}
-            </p>
-          </div>
-        )}
+        {person.bio && <BioText text={person.bio} clampLines={5} />}
       </div>
     </div>
   );
