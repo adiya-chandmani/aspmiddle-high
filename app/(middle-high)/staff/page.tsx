@@ -17,9 +17,6 @@ export default async function MatriculationPage() {
 
   const years = Array.from(new Set(records.map((r) => r.year))).sort((a, b) => b - a);
 
-  const accepted = records.filter((r) => r.outcome === "ACCEPTED");
-  const matriculated = records.filter((r) => r.outcome === "MATRICULATED");
-
   return (
     <MiddleHighHeroLayout active="matriculation">
       <div className="container mx-auto px-4 py-12">
@@ -37,22 +34,10 @@ export default async function MatriculationPage() {
           </div>
         ) : (
           <div className="space-y-10">
-            {/* Quick summary */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-                <p className="text-sm text-gray-600">Acceptances</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{accepted.length}</p>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-                <p className="text-sm text-gray-600">Matriculations</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{matriculated.length}</p>
-              </div>
-            </div>
-
             {years.map((year) => {
-              const list = records.filter((r) => r.year === year);
-              const acceptedList = list.filter((r) => r.outcome === "ACCEPTED");
-              const matriculatedList = list.filter((r) => r.outcome === "MATRICULATED");
+              const list = records
+                .filter((r) => r.year === year)
+                .filter((r) => r.outcome === "MATRICULATED");
 
               const uniqueUniversities = new Set(list.map((r) => r.university)).size;
 
@@ -129,44 +114,21 @@ export default async function MatriculationPage() {
                       </div>
                     </div>
 
-                    <div className="p-6 space-y-10">
-                      <div>
-                        <div className="flex items-baseline justify-between mb-4">
-                          <h3 className="text-xl font-semibold">Matriculations</h3>
-                          <p className="text-sm text-gray-600">{matriculatedList.length}</p>
-                        </div>
-                        {matriculatedList.length === 0 ? (
-                          <p className="text-sm text-gray-500">No matriculations published for this year.</p>
-                        ) : (
-                          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {matriculatedList.map((r) => (
-                              <Card key={r.id} r={r} />
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Small acceptances summary (separate ACCEPTED records) */}
-                        <div className="mt-6">
-                          <div className="flex items-baseline justify-between mb-2">
-                            <p className="text-sm font-semibold text-gray-700">University Acceptances</p>
-                            <p className="text-xs text-gray-500">{acceptedList.length}</p>
-                          </div>
-                          {acceptedList.length === 0 ? (
-                            <p className="text-sm text-gray-500">No acceptances published for this year.</p>
-                          ) : (
-                            <div className="flex flex-wrap gap-2">
-                              {acceptedList.map((r) => (
-                                <span
-                                  key={r.id}
-                                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
-                                >
-                                  {r.university}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
+                    <div className="p-6">
+                      <div className="flex items-baseline justify-between mb-4">
+                        <h3 className="text-xl font-semibold">Matriculations</h3>
+                        <p className="text-sm text-gray-600">{list.length}</p>
                       </div>
+
+                      {list.length === 0 ? (
+                        <p className="text-sm text-gray-500">No matriculations published for this year.</p>
+                      ) : (
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {list.map((r) => (
+                            <Card key={r.id} r={r} />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </section>

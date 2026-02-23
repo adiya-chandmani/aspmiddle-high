@@ -30,9 +30,7 @@ export async function PUT(
       data: {
         ...(year !== undefined ? { year } : {}),
         ...(body.university !== undefined ? { university: String(body.university).trim() } : {}),
-        ...(body.outcome !== undefined
-          ? { outcome: body.outcome === "ACCEPTED" ? "ACCEPTED" : "MATRICULATED" }
-          : {}),
+        ...(body.outcome !== undefined ? { outcome: "MATRICULATED" } : {}),
         ...(body.logoUrl !== undefined ? { logoUrl: body.logoUrl ? String(body.logoUrl).trim() : null } : {}),
         ...(body.country !== undefined ? { country: body.country ? String(body.country).trim() : null } : {}),
         ...(body.studentName !== undefined

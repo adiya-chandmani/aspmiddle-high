@@ -44,7 +44,6 @@ export default function MatriculationManager({
   const [form, setForm] = useState({
     year: new Date().getFullYear(),
     university: "",
-    outcome: "MATRICULATED" as "ACCEPTED" | "MATRICULATED",
     logoUrl: "",
     country: "",
     studentName: "",
@@ -76,7 +75,6 @@ export default function MatriculationManager({
         body: JSON.stringify({
           year: Number(form.year),
           university: form.university,
-          outcome: form.outcome,
           logoUrl: form.logoUrl || null,
           country: form.country || null,
           studentName: form.studentName || null,
@@ -95,7 +93,6 @@ export default function MatriculationManager({
       setForm((f) => ({
         ...f,
         university: "",
-        outcome: "MATRICULATED",
         logoUrl: "",
         country: "",
         studentName: "",
@@ -162,22 +159,12 @@ export default function MatriculationManager({
             />
           </label>
 
-          <label className="block">
+          <div className="block">
             <span className="text-sm text-gray-700 dark:text-gray-300">Outcome</span>
-            <select
-              className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900"
-              value={form.outcome}
-              onChange={(e) =>
-                setForm((f) => ({
-                  ...f,
-                  outcome: e.target.value as "ACCEPTED" | "MATRICULATED",
-                }))
-              }
-            >
-              <option value="ACCEPTED">Accepted</option>
-              <option value="MATRICULATED">Matriculated</option>
-            </select>
-          </label>
+            <div className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-gray-200">
+              Matriculation
+            </div>
+          </div>
 
           <label className="block">
             <span className="text-sm text-gray-700 dark:text-gray-300">University logo URL (optional)</span>
@@ -243,23 +230,21 @@ export default function MatriculationManager({
             />
           </label>
 
-          {form.outcome === "MATRICULATED" && (
-            <label className="block md:col-span-2">
-              <span className="text-sm text-gray-700 dark:text-gray-300">
-                University Acceptances (optional)
-              </span>
-              <textarea
-                className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900"
-                rows={3}
-                value={form.acceptances}
-                onChange={(e) => setForm((f) => ({ ...f, acceptances: e.target.value }))}
-                placeholder="One per line (e.g., Harvard University)"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                This will show as a small list on the Matriculation card.
-              </p>
-            </label>
-          )}
+          <label className="block md:col-span-2">
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              University Acceptances (optional)
+            </span>
+            <textarea
+              className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900"
+              rows={3}
+              value={form.acceptances}
+              onChange={(e) => setForm((f) => ({ ...f, acceptances: e.target.value }))}
+              placeholder="One per line (e.g., Harvard University)"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              This will show as a small list on the Matriculation card.
+            </p>
+          </label>
 
           <label className="inline-flex items-center gap-2">
             <input
@@ -312,7 +297,6 @@ export default function MatriculationManager({
             <thead>
               <tr className="text-left border-b border-gray-200 dark:border-gray-700">
                 <th className="py-2 pr-3">Year</th>
-                <th className="py-2 pr-3">Outcome</th>
                 <th className="py-2 pr-3">Logo</th>
                 <th className="py-2 pr-3">University</th>
                 <th className="py-2 pr-3">Country</th>
@@ -327,24 +311,6 @@ export default function MatriculationManager({
               {filtered.map((r) => (
                 <tr key={r.id} className="border-b border-gray-100 dark:border-gray-700">
                   <td className="py-2 pr-3">{r.year}</td>
-                  <td className="py-2 pr-3">
-                    <select
-                      className="w-36 rounded-md border-gray-200 dark:border-gray-700 dark:bg-gray-900"
-                      value={r.outcome}
-                      onChange={async (e) => {
-                        const next = e.target.value as "ACCEPTED" | "MATRICULATED";
-                        setRecords((prev) => prev.map((x) => (x.id === r.id ? { ...x, outcome: next } : x)));
-                        try {
-                          await updateRecord(r.id, { outcome: next });
-                        } catch (err: any) {
-                          alert(err.message);
-                        }
-                      }}
-                    >
-                      <option value="ACCEPTED">Accepted</option>
-                      <option value="MATRICULATED">Matriculated</option>
-                    </select>
-                  </td>
                   <td className="py-2 pr-3">
                     <div className="flex items-center gap-2">
                       <input
@@ -490,7 +456,7 @@ export default function MatriculationManager({
 
               {filtered.length === 0 && (
                 <tr>
-                  <td className="py-8 text-gray-500" colSpan={10}>
+                  <td className="py-8 text-gray-500" colSpan={9}>
                     No records yet.
                   </td>
                 </tr>
