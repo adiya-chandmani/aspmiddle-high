@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type CSSProperties, useMemo, useState } from "react";
 
 export default function BioText({
   text,
@@ -12,17 +12,26 @@ export default function BioText({
   const [expanded, setExpanded] = useState(false);
 
   const shouldShowToggle = useMemo(() => {
-    // Heuristic: show toggle for longer bios (works well without measuring DOM lines)
+    // Heuristic: show toggle only when it’s likely to overflow the collapsed view.
     const normalized = text.trim();
-    return normalized.length >= 180 || normalized.split("\n").some((l) => l.trim().length > 0);
+    return normalized.length >= 220;
   }, [text]);
 
   return (
     <div className="mt-2 pt-3 border-t border-gray-100">
       <p
         className={`text-sm text-gray-700 leading-relaxed whitespace-pre-line ${
-          expanded ? "" : `line-clamp-${clampLines}`
+          expanded ? "" : "overflow-hidden"
         }`}
+        style={
+          expanded
+            ? undefined
+            : ({
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: clampLines,
+              } as CSSProperties)
+        }
       >
         {text}
       </p>
