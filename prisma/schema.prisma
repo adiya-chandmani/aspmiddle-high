@@ -298,3 +298,21 @@ model FAQ {
 
   @@map("faqs")
 }
+
+// Matriculation outcomes (university placements)
+model MatriculationRecord {
+  id          String   @id @default(cuid())
+  year        Int
+  university  String
+  country     String?
+  studentName String?  @map("student_name")
+  program     String?
+  note        String?  @db.Text
+  order       Int      @default(0)
+  isPublished Boolean  @default(true) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([year])
+  @@map("matriculation_records")
+}

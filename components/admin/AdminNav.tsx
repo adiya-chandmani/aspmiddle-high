@@ -14,6 +14,7 @@ export default function AdminNav() {
     { href: "/admin/clubs", label: "Club Sections" },
     { href: "/admin/teachers", label: "Personnel" },
     { href: "/admin/faqs", label: "FAQs" },
+    { href: "/admin/matriculation", label: "Matriculation" },
     { href: "/admin/users", label: "User Roles" },
   ];
 
