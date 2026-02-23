@@ -49,8 +49,15 @@ function PersonCard({ person, fallbackLetter }: { person: Person; fallbackLetter
         )}
       </div>
       <div className="text-center">
-        {person.email && <p className="text-sm text-gray-600 mb-2">{person.email}</p>}
-        {person.bio && <p className="text-sm text-gray-700">{person.bio}</p>}
+        {person.email && <p className="text-sm text-gray-600 mb-3">{person.email}</p>}
+
+        {person.bio && (
+          <div className="mt-2 pt-3 border-t border-gray-100">
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line line-clamp-5">
+              {person.bio}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
