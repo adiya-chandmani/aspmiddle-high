@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
         studentName: body.studentName ? String(body.studentName).trim() : null,
         program: body.program ? String(body.program).trim() : null,
         note: body.note ? String(body.note).trim() : null,
+        acceptances: body.acceptances ? String(body.acceptances) : null,
         order: typeof body.order === "number" ? body.order : 0,
         isPublished: typeof body.isPublished === "boolean" ? body.isPublished : true,
       },

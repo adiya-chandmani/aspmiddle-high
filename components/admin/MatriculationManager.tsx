@@ -12,6 +12,7 @@ type MatriculationRecord = {
   studentName: string | null;
   program: string | null;
   note: string | null;
+  acceptances: string | null;
   order: number;
   isPublished: boolean;
   createdAt: string;
@@ -49,6 +50,7 @@ export default function MatriculationManager({
     studentName: "",
     program: "",
     note: "",
+    acceptances: "",
     order: 0,
     isPublished: true,
   });
@@ -80,6 +82,7 @@ export default function MatriculationManager({
           studentName: form.studentName || null,
           program: form.program || null,
           note: form.note || null,
+          acceptances: form.acceptances || null,
           order: Number(form.order) || 0,
           isPublished: Boolean(form.isPublished),
         }),
@@ -98,6 +101,7 @@ export default function MatriculationManager({
         studentName: "",
         program: "",
         note: "",
+        acceptances: "",
         order: 0,
         isPublished: true,
       }));
@@ -238,6 +242,24 @@ export default function MatriculationManager({
               placeholder="Optional short note (scholarship, honors, etc.)"
             />
           </label>
+
+          {form.outcome === "MATRICULATED" && (
+            <label className="block md:col-span-2">
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                University Acceptances (optional)
+              </span>
+              <textarea
+                className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900"
+                rows={3}
+                value={form.acceptances}
+                onChange={(e) => setForm((f) => ({ ...f, acceptances: e.target.value }))}
+                placeholder="One per line (e.g., Harvard University)"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                This will show as a small list on the Matriculation card.
+              </p>
+            </label>
+          )}
 
           <label className="inline-flex items-center gap-2">
             <input

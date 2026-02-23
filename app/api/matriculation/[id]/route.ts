@@ -40,6 +40,9 @@ export async function PUT(
           : {}),
         ...(body.program !== undefined ? { program: body.program ? String(body.program).trim() : null } : {}),
         ...(body.note !== undefined ? { note: body.note ? String(body.note).trim() : null } : {}),
+        ...(body.acceptances !== undefined
+          ? { acceptances: body.acceptances ? String(body.acceptances) : null }
+          : {}),
         ...(body.order !== undefined ? { order: typeof body.order === "number" ? body.order : Number(body.order) } : {}),
         ...(body.isPublished !== undefined ? { isPublished: Boolean(body.isPublished) } : {}),
       },

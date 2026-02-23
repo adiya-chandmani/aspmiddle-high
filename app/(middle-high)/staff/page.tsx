@@ -88,6 +88,30 @@ export default async function MatriculationPage() {
                           <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{r.note}</p>
                         </div>
                       )}
+
+                      {r.acceptances && r.outcome === "MATRICULATED" && (
+                        <div className="mt-3 pt-3 border-t border-gray-100">
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
+                              University Acceptances
+                            </p>
+                          </div>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {r.acceptances
+                              .split("\n")
+                              .map((x) => x.trim())
+                              .filter(Boolean)
+                              .map((u, idx) => (
+                                <span
+                                  key={`${r.id}-acc-${idx}`}
+                                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
+                                >
+                                  {u}
+                                </span>
+                              ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -108,22 +132,6 @@ export default async function MatriculationPage() {
                     <div className="p-6 space-y-10">
                       <div>
                         <div className="flex items-baseline justify-between mb-4">
-                          <h3 className="text-xl font-semibold">Acceptances</h3>
-                          <p className="text-sm text-gray-600">{acceptedList.length}</p>
-                        </div>
-                        {acceptedList.length === 0 ? (
-                          <p className="text-sm text-gray-500">No acceptances published for this year.</p>
-                        ) : (
-                          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {acceptedList.map((r) => (
-                              <Card key={r.id} r={r} />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      <div>
-                        <div className="flex items-baseline justify-between mb-4">
                           <h3 className="text-xl font-semibold">Matriculations</h3>
                           <p className="text-sm text-gray-600">{matriculatedList.length}</p>
                         </div>
@@ -136,6 +144,28 @@ export default async function MatriculationPage() {
                             ))}
                           </div>
                         )}
+
+                        {/* Small acceptances summary (separate ACCEPTED records) */}
+                        <div className="mt-6">
+                          <div className="flex items-baseline justify-between mb-2">
+                            <p className="text-sm font-semibold text-gray-700">University Acceptances</p>
+                            <p className="text-xs text-gray-500">{acceptedList.length}</p>
+                          </div>
+                          {acceptedList.length === 0 ? (
+                            <p className="text-sm text-gray-500">No acceptances published for this year.</p>
+                          ) : (
+                            <div className="flex flex-wrap gap-2">
+                              {acceptedList.map((r) => (
+                                <span
+                                  key={r.id}
+                                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
+                                >
+                                  {r.university}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
