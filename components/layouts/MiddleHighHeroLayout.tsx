@@ -5,7 +5,7 @@ type MiddleHighTab =
   | "qna"
   | "news"
   | "facultyStaff"
-  | "acceptances"
+  | "matriculation"
   | "club"
   | "community";
 
@@ -24,9 +24,9 @@ export default function MiddleHighHeroLayout({
     { key: "news", href: "/news", label: "News" },
     { key: "facultyStaff", href: "/teachers", label: "Faculty & Staff" },
     {
-      key: "acceptances",
+      key: "matriculation",
       href: "/staff",
-      label: "University Acceptances & Matriculation",
+      label: "Matriculation",
     },
     { key: "club", href: "/club", label: "Club" },
     { key: "community", href: "/community", label: "Community" },

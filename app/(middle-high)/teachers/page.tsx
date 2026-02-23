@@ -56,7 +56,14 @@ function PersonCard({ person, fallbackLetter }: { person: Person; fallbackLetter
   );
 }
 
-export default async function FacultyStaffPage() {
+export default async function FacultyStaffPage({
+  searchParams,
+}: {
+  searchParams?: { section?: string };
+}) {
+  const sectionParam = (searchParams?.section || "faculty").toLowerCase();
+  const activeSection: "faculty" | "staff" = sectionParam === "staff" ? "staff" : "faculty";
+
   const [faculty, staff] = await Promise.all([
     prisma.teacher.findMany({
       where: { isActive: true, type: "TEACHER" },
@@ -68,48 +75,61 @@ export default async function FacultyStaffPage() {
     }),
   ]);
 
+  const list = activeSection === "faculty" ? faculty : staff;
+
   return (
     <MiddleHighHeroLayout active="facultyStaff">
       <div className="container mx-auto px-4 py-12">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
           <h1 className="text-4xl font-bold">Faculty &amp; Staff</h1>
+
+          {/* Section Toggle */}
+          <div className="flex gap-2">
+            <a
+              href="/teachers?section=faculty"
+              className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
+                activeSection === "faculty"
+                  ? "bg-navy text-white border-navy"
+                  : "bg-white text-gray-800 border-gray-200 hover:border-orange"
+              }`}
+            >
+              Faculty
+            </a>
+            <a
+              href="/teachers?section=staff"
+              className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
+                activeSection === "staff"
+                  ? "bg-navy text-white border-navy"
+                  : "bg-white text-gray-800 border-gray-200 hover:border-orange"
+              }`}
+            >
+              Staff
+            </a>
+          </div>
         </div>
 
-        {/* Faculty Section */}
-        <section className="mb-14">
-          <h2 className="text-2xl font-bold mb-6">Faculty</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {faculty.map((person) => (
-              <div key={person.id}>
-                <PersonCard person={person} fallbackLetter="F" />
-              </div>
-            ))}
-          </div>
-
-          {faculty.length === 0 && (
-            <div className="bg-gray-50 p-10 rounded-lg text-center mt-6">
-              <p className="text-lg text-gray-600">
-                No faculty information has been registered yet.
-              </p>
-            </div>
-          )}
-        </section>
-
-        {/* Staff Section */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Staff</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {activeSection === "faculty" ? "Faculty" : "Staff"}
+          </h2>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {staff.map((person) => (
+            {list.map((person) => (
               <div key={person.id}>
-                <PersonCard person={person} fallbackLetter="S" />
+                <PersonCard
+                  person={person}
+                  fallbackLetter={activeSection === "faculty" ? "F" : "S"}
+                />
               </div>
             ))}
           </div>
 
-          {staff.length === 0 && (
+          {list.length === 0 && (
             <div className="bg-gray-50 p-10 rounded-lg text-center mt-6">
               <p className="text-lg text-gray-600">
-                No staff information has been registered yet.
+                {activeSection === "faculty"
+                  ? "No faculty information has been registered yet."
+                  : "No staff information has been registered yet."}
               </p>
             </div>
           )}

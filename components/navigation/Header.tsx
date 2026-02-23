@@ -101,7 +101,7 @@ export default function Header() {
               href="/staff"
               className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
             >
-              UNIVERSITY ACCEPTANCES &amp; MATRICULATION
+              MATRICULATION
             </Link>
             <Link
               href="/club"
