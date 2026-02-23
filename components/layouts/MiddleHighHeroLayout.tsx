@@ -1,6 +1,13 @@
 import Link from "next/link";
 
-type MiddleHighTab = "about" | "qna" | "news" | "teachers" | "staff" | "club" | "community";
+type MiddleHighTab =
+  | "about"
+  | "qna"
+  | "news"
+  | "facultyStaff"
+  | "acceptances"
+  | "club"
+  | "community";
 
 interface MiddleHighHeroLayoutProps {
   active?: MiddleHighTab;
@@ -15,8 +22,12 @@ export default function MiddleHighHeroLayout({
     { key: "about", href: "/about", label: "About" },
     { key: "qna", href: "/qna", label: "Q&A" },
     { key: "news", href: "/news", label: "News" },
-    { key: "teachers", href: "/teachers", label: "Teachers" },
-    { key: "staff", href: "/staff", label: "Staff" },
+    { key: "facultyStaff", href: "/teachers", label: "Faculty & Staff" },
+    {
+      key: "acceptances",
+      href: "/staff",
+      label: "University Acceptances & Matriculation",
+    },
     { key: "club", href: "/club", label: "Club" },
     { key: "community", href: "/community", label: "Community" },
   ];

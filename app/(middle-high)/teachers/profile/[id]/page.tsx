@@ -47,7 +47,7 @@ export default async function TeacherProfileEditPage({
   }
 
   return (
-    <MiddleHighHeroLayout active="teachers">
+    <MiddleHighHeroLayout active="facultyStaff">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold text-navy mb-8">Edit Teacher Profile</h1>
