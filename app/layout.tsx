@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "School Web Platform",
@@ -14,8 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="ko">
-        <body>{children}</body>
+      <html lang="ko" className={notoSansKr.variable}>
+        <body className="font-sans antialiased">{children}</body>
       </html>
     </ClerkProvider>
   );

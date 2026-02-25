@@ -20,23 +20,27 @@ export default function AdminNav() {
 
   return (
     <nav className="bg-navy-700">
-      <div className="container mx-auto px-4 flex items-center gap-6 text-sm font-medium">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`py-3 border-b-2 transition-colors ${
-                isActive
-                  ? "border-white text-white"
-                  : "border-transparent text-white/70 hover:border-white/50 hover:text-white"
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+      <div className="container mx-auto px-4">
+        <div className="flex items-center gap-6 text-sm font-medium overflow-x-auto whitespace-nowrap">
+          {navItems.map((item) => {
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/admin" && pathname.startsWith(item.href));
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`py-3 border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-navy-700 ${
+                  isActive
+                    ? "border-white text-white"
+                    : "border-transparent text-white/70 hover:border-white/50 hover:text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );

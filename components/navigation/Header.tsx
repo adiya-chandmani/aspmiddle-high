@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from "react";
 export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    // Close settings menu when clicking outside
+    // Close menus when clicking outside
     const handleClickOutside = (event: MouseEvent) => {
       if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
         setIsSettingsOpen(false);
@@ -40,6 +41,15 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSettingsOpen]);
+
+  useEffect(() => {
+    // Close mobile menu on route change-like interactions (basic escape hatch)
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
@@ -206,8 +216,12 @@ export default function Header() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-gray-300 hover:text-white"
-              aria-label="메뉴 열기"
+              type="button"
+              className="md:hidden p-2 text-gray-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+              aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav"
+              onClick={() => setIsMobileMenuOpen((v) => !v)}
             >
               <svg
                 className="h-6 w-6"
@@ -223,6 +237,35 @@ export default function Header() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <nav
+            id="mobile-nav"
+            className="md:hidden border-t border-white/10 py-3"
+          >
+            <div className="grid gap-1">
+              {[
+                { href: "/about", label: "ABOUT" },
+                { href: "/qna", label: "Q&A" },
+                { href: "/news", label: "NEWS" },
+                { href: "/teachers", label: "FACULTY & STAFF" },
+                { href: "/staff", label: "MATRICULATION" },
+                { href: "/club", label: "CLUB" },
+                { href: "/community", label: "COMMUNITY" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-2 py-2 rounded-md text-sm font-medium text-gray-200 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   );

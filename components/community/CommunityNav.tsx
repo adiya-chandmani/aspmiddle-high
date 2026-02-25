@@ -32,7 +32,8 @@ export default function CommunityNav() {
       </div>
       <Link
         href="/"
-        className="p-2 text-gray-600 dark:text-gray-400 hover:text-orange hover:bg-orange/10 dark:hover:bg-orange/20 rounded-md transition-colors"
+        aria-label="홈으로 이동"
+        className="p-2 text-gray-600 dark:text-gray-400 hover:text-orange hover:bg-orange/10 dark:hover:bg-orange/20 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-800"
         title="홈으로 이동"
       >
         <svg

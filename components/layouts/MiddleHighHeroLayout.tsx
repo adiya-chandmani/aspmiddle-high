@@ -34,8 +34,8 @@ export default function MiddleHighHeroLayout({
 
   return (
     <div className="relative min-h-screen">
-      {/* Hero Section with Large Blue Block */}
-      <div className="relative w-full min-h-[320px] md:min-h-[520px] flex items-center">
+      {/* Hero Section */}
+      <div className="relative w-full min-h-[280px] md:min-h-[380px] flex items-center">
         {/* Background with blurred text effect */}
         <div className="absolute inset-0 overflow-hidden">
           <div
@@ -48,7 +48,7 @@ export default function MiddleHighHeroLayout({
 
         {/* Large Blue Content Block */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8">
-          <div className="bg-navy text-white p-10 md:p-14 lg:p-16 max-w-2xl">
+          <div className="bg-navy text-white p-8 md:p-10 lg:p-12 max-w-3xl rounded-none md:rounded-lg shadow-sm">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
               MIDDLE & HIGH SCHOOL
             </h1>
@@ -61,13 +61,14 @@ export default function MiddleHighHeroLayout({
 
       {/* Sub-Navigation Links */}
       <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 md:px-8 py-6">
-          <nav className="flex flex-wrap items-center gap-4 md:gap-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
+          <nav className="flex items-center gap-6 overflow-x-auto whitespace-nowrap">
             {tabs.map((tab, index) => (
               <div key={tab.key} className="flex items-center gap-4">
                 <Link
                   href={tab.href}
-                  className={`text-sm md:text-base font-medium pb-2 border-b-2 transition-colors ${
+                  aria-current={active === tab.key ? "page" : undefined}
+                  className={`text-sm md:text-base font-medium pb-2 border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-800 ${
                     active === tab.key
                       ? "text-navy dark:text-orange border-orange"
                       : "text-gray-700 dark:text-gray-300 border-transparent hover:text-orange hover:border-orange dark:hover:text-orange"
@@ -83,7 +84,11 @@ export default function MiddleHighHeroLayout({
       </div>
 
       {/* Page Content */}
-      <div className="bg-gray-50 dark:bg-gray-900">{children}</div>
+      <div className="bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-12">
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
