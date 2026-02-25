@@ -1,11 +1,6 @@
-import MiddleHighAboutContent from "@/components/about/MiddleHighAboutContent";
-import MiddleHighHeroLayout from "@/components/layouts/MiddleHighHeroLayout";
+import MiddleHighHome from "@/components/home/MiddleHighHome";
 
 export default function Home() {
-  return (
-    <MiddleHighHeroLayout active="about">
-      <MiddleHighAboutContent />
-    </MiddleHighHeroLayout>
-  );
+  return <MiddleHighHome />;
 }
 
