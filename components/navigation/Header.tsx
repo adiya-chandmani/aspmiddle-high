@@ -108,7 +108,7 @@ export default function Header() {
               FACULTY &amp; STAFF
             </Link>
             <Link
-              href="/staff"
+              href="/matriculation"
               className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
             >
               MATRICULATION
@@ -250,7 +250,7 @@ export default function Header() {
                 { href: "/qna", label: "Q&A" },
                 { href: "/news", label: "NEWS" },
                 { href: "/teachers", label: "FACULTY & STAFF" },
-                { href: "/staff", label: "MATRICULATION" },
+                { href: "/matriculation", label: "MATRICULATION" },
                 { href: "/club", label: "CLUB" },
                 { href: "/community", label: "COMMUNITY" },
               ].map((item) => (
@@ -270,4 +270,3 @@ export default function Header() {
     </header>
   );
 }
-

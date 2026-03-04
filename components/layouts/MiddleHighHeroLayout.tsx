@@ -25,7 +25,7 @@ export default function MiddleHighHeroLayout({
     { key: "facultyStaff", href: "/teachers", label: "Faculty & Staff" },
     {
       key: "matriculation",
-      href: "/staff",
+      href: "/matriculation",
       label: "Matriculation",
     },
     { key: "club", href: "/club", label: "Club" },
@@ -92,5 +92,4 @@ export default function MiddleHighHeroLayout({
     </div>
   );
 }
-
 
