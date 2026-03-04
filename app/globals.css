@@ -50,44 +50,6 @@ body {
   color: #9ca3af;
 }
 
-.text-hero {
-  font-size: clamp(2.4rem, 7vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-}
-
-.text-section {
-  font-size: clamp(2rem, 4.6vw, 3.2rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-.text-headline {
-  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
-  line-height: 1.2;
-}
-
-.text-subhead {
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  line-height: 1.45;
-}
-
-html[lang="ko"] .text-hero {
-  font-size: clamp(2.2rem, 6.3vw, 5.2rem);
-}
-
-html[lang="ko"] .text-section {
-  font-size: clamp(1.8rem, 4.1vw, 2.8rem);
-}
-
-html[lang="ko"] .text-headline {
-  font-size: clamp(1.35rem, 2.3vw, 1.9rem);
-}
-
-html[lang="ko"] .text-subhead {
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
-}
-
 .bg-surface {
   background: var(--surface);
 }
