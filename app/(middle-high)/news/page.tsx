@@ -52,8 +52,8 @@ export default async function NewsPage() {
     <MiddleHighHeroLayout active="news">
       <div className="container mx-auto px-4 py-12">
         {newsItems.length === 0 ? (
-          <div className="bg-gray-50 p-12 rounded-lg text-center border border-dashed border-gray-300">
-            <p className="text-lg text-gray-600">
+          <div className="rounded-[var(--radius-lg)] border border-dashed border-gray-300 bg-gray-50 p-12 text-center">
+            <p className="text-lg text-muted">
               No news articles available. Please add content from the admin page.
             </p>
           </div>
@@ -66,7 +66,7 @@ export default async function NewsPage() {
                 <Link
                   key={news.id}
                   href={`/news/${news.id}`}
-                  className="group aspect-square rounded-3xl border border-gray-200 bg-white shadow-sm hover:shadow-lg hover:border-orange transition-all flex flex-col overflow-hidden"
+                  className="surface-card group aspect-square transition-all hover:border-orange hover:shadow-md flex flex-col overflow-hidden"
                 >
                   <div className="relative h-1/2 w-full bg-gray-100 border-b border-gray-200">
                     {coverImage ? (
@@ -79,25 +79,25 @@ export default async function NewsPage() {
                         unoptimized
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">
+                      <div className="flex h-full w-full items-center justify-center text-xs text-subtle">
                         IMAGE
                       </div>
                     )}
                   </div>
                   <div className="flex-1 p-5 flex flex-col">
-                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                    <div className="mb-2 flex items-center gap-2 text-xs text-subtle">
                       <span className="font-semibold text-orange uppercase tracking-widest">
                         {news.category || "NEWS"}
                       </span>
                       <span>·</span>
                       <span>{formatRelativeTime(publishedAt)}</span>
                     </div>
-                    <h2 className="text-lg font-semibold text-gray-900 line-clamp-2 mb-2">
+                    <h2 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900">
                       {news.title}
                     </h2>
-                    <p className="text-sm text-gray-600 line-clamp-3 flex-1">{getSnippet(news.summary, news.content)}</p>
+                    <p className="text-sm text-muted line-clamp-3 flex-1">{getSnippet(news.summary, news.content)}</p>
                     {news.author?.name && (
-                      <p className="text-xs uppercase tracking-[0.3em] text-gray-400 mt-4">
+                      <p className="mt-4 text-xs uppercase tracking-[0.3em] text-gray-400">
                         {news.author.name}
                       </p>
                     )}
@@ -111,4 +111,3 @@ export default async function NewsPage() {
     </MiddleHighHeroLayout>
   );
 }
-

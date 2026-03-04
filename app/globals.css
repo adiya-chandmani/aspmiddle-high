@@ -5,6 +5,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --border-soft: #e5e7eb;
+  --text-muted: #4b5563;
+  --text-subtle: #6b7280;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +32,43 @@ body {
 .dark body {
   background: #0f172a;
   color: #f1f5f9;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-subtle {
+  color: var(--text-subtle);
+}
+
+.dark .text-muted {
+  color: #d1d5db;
+}
+
+.dark .text-subtle {
+  color: #9ca3af;
+}
+
+.bg-surface {
+  background: var(--surface);
+}
+
+.bg-surface-muted {
+  background: var(--surface-muted);
+}
+
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.dark .surface-card {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
 }
 
 /* Prose dark mode styles */
@@ -130,4 +176,3 @@ body {
 .dark .quill .ql-editor.ql-blank::before {
   color: #64748b;
 }
-

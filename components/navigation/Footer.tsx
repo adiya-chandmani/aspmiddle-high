@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
 
           {/* Middle Column - Contact Us */}
-          <div className="border-l border-gray-600 dark:border-gray-700 pl-8">
+          <div className="border-t pt-6 md:pt-0 md:border-t-0 md:border-l border-gray-600 dark:border-gray-700 md:pl-8">
             <h3 className="text-white text-lg font-bold mb-6">Contact Us</h3>
             <div className="space-y-6 text-sm">
               <div>
@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
 
           {/* Right Column - Address */}
-          <div className="border-l border-gray-600 dark:border-gray-700 pl-8">
+          <div className="border-t pt-6 md:pt-0 md:border-t-0 md:border-l border-gray-600 dark:border-gray-700 md:pl-8">
             <h3 className="text-white text-lg font-bold mb-6">Address</h3>
             <div className="space-y-6 text-sm">
               <div>
@@ -87,4 +87,3 @@ export default function Footer() {
     </footer>
   );
 }
-

@@ -6,7 +6,7 @@ export default function MiddleHighAboutContent() {
       {/* Welcome Message */}
       <section className="mb-16">
         <h1 className="text-4xl font-bold mb-8 text-navy dark:text-white">Welcome Message</h1>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="surface-card overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* Left: Portrait Photo */}
             <div className="md:w-1/3 bg-gray-100 relative min-h-[400px] md:min-h-full">
@@ -31,7 +31,7 @@ export default function MiddleHighAboutContent() {
                   Welcome to American STEM Prep – Middle & High School
                 </h2>
                 
-                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+                <div className="max-w-3xl space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                   <p className="text-base md:text-lg">
                     It is my pleasure to welcome you to ASP&apos;s Middle and High School community. At ASP, we are dedicated to delivering a first-class STEM education that empowers students to become well-rounded, English-speaking, critical thinkers who are fully prepared for success at international universities and beyond.
                   </p>
@@ -69,7 +69,7 @@ export default function MiddleHighAboutContent() {
 
       {/* Mission */}
       <section className="mb-16">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="surface-card overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* Left: Mission Image */}
             <div className="md:w-1/2 bg-gray-100 dark:bg-gray-700 relative min-h-[400px]">
@@ -97,7 +97,7 @@ export default function MiddleHighAboutContent() {
 
       {/* Building Excellence - Accreditation */}
       <section className="mb-16">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8 md:p-12">
+        <div className="surface-card p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white">Building Excellence</h2>
           
           {/* Introduction Paragraph */}
@@ -118,8 +118,8 @@ export default function MiddleHighAboutContent() {
           {/* Accreditation Certificates */}
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             {/* Accreditation International */}
-            <div className="bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="relative w-full h-64 rounded-lg overflow-hidden">
+            <div className="surface-card p-6 transition-shadow hover:shadow-md">
+              <div className="relative h-64 w-full overflow-hidden rounded-[var(--radius-md)]">
                 <Image
                   src="/cert1.avif"
                   alt="Accreditation International Certificate"
@@ -131,8 +131,8 @@ export default function MiddleHighAboutContent() {
             </div>
 
             {/* NCPSA */}
-            <div className="bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="relative w-full h-64 rounded-lg overflow-hidden">
+            <div className="surface-card p-6 transition-shadow hover:shadow-md">
+              <div className="relative h-64 w-full overflow-hidden rounded-[var(--radius-md)]">
                 <Image
                   src="/cert2.avif"
                   alt="National Council for Private School Accreditation Certificate"
@@ -144,8 +144,8 @@ export default function MiddleHighAboutContent() {
             </div>
 
             {/* Cognia */}
-            <div className="bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="relative w-full h-64 rounded-lg overflow-hidden bg-white dark:bg-gray-700 p-2">
+            <div className="surface-card p-6 transition-shadow hover:shadow-md">
+              <div className="relative h-64 w-full overflow-hidden rounded-[var(--radius-md)] bg-white p-2 dark:bg-gray-700">
                 {/* Mimic certificate-style double frame (outer light frame + inner black lines) */}
                 <div className="relative w-full h-full overflow-hidden rounded-md border-2 border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-700">
                   <div className="relative w-full h-full overflow-hidden rounded border-4 border-black ring-2 ring-black ring-offset-2 ring-offset-white dark:ring-offset-gray-700">
@@ -166,5 +166,3 @@ export default function MiddleHighAboutContent() {
     </div>
   );
 }
-
-

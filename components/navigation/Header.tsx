@@ -70,7 +70,7 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="relative w-40 h-40">
+            <div className="relative h-12 w-36">
               <Image
                 src="/asfc.png"
                 alt="ASP Logo"
@@ -83,47 +83,32 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Link
-              href="/about"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
-            >
-              ABOUT
+            <Link href="/about" className="text-base font-medium text-gray-200 hover:text-orange transition-colors">
+              About
             </Link>
-            <Link
-              href="/qna"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
-            >
-              Q&A
+            <Link href="/qna" className="text-base font-medium text-gray-200 hover:text-orange transition-colors">
+              Q&amp;A
             </Link>
-            <Link
-              href="/news"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
-            >
-              NEWS
+            <Link href="/news" className="text-base font-medium text-gray-200 hover:text-orange transition-colors">
+              News
             </Link>
-            <Link
-              href="/teachers"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
-            >
-              FACULTY &amp; STAFF
+            <Link href="/teachers" className="text-base font-medium text-gray-200 hover:text-orange transition-colors">
+              Faculty &amp; Staff
             </Link>
             <Link
               href="/matriculation"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
+              className="text-base font-medium text-gray-200 hover:text-orange transition-colors"
             >
-              MATRICULATION
+              Matriculation
             </Link>
-            <Link
-              href="/club"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
-            >
-              CLUB
+            <Link href="/club" className="text-base font-medium text-gray-200 hover:text-orange transition-colors">
+              Club
             </Link>
             <Link
               href="/community"
-              className="text-sm font-medium text-gray-300 hover:text-orange transition-colors"
+              className="text-base font-medium text-gray-200 hover:text-orange transition-colors"
             >
-              COMMUNITY
+              Community
             </Link>
           </nav>
 
@@ -246,13 +231,13 @@ export default function Header() {
           >
             <div className="grid gap-1">
               {[
-                { href: "/about", label: "ABOUT" },
+                { href: "/about", label: "About" },
                 { href: "/qna", label: "Q&A" },
-                { href: "/news", label: "NEWS" },
-                { href: "/teachers", label: "FACULTY & STAFF" },
-                { href: "/matriculation", label: "MATRICULATION" },
-                { href: "/club", label: "CLUB" },
-                { href: "/community", label: "COMMUNITY" },
+                { href: "/news", label: "News" },
+                { href: "/teachers", label: "Faculty & Staff" },
+                { href: "/matriculation", label: "Matriculation" },
+                { href: "/club", label: "Club" },
+                { href: "/community", label: "Community" },
               ].map((item) => (
                 <Link
                   key={item.href}

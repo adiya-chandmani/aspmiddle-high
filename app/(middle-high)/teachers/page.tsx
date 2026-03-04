@@ -23,7 +23,7 @@ type Person = {
 
 function PersonCard({ person, fallbackLetter }: { person: Person; fallbackLetter: string }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+    <div className="surface-card p-6 transition-shadow hover:shadow-md">
       <div className="mb-4">
         {person.profileImage ? (
           <div className="relative w-20 h-20 rounded-full overflow-hidden mx-auto mb-3 border-2 border-gray-200">
@@ -42,7 +42,7 @@ function PersonCard({ person, fallbackLetter }: { person: Person; fallbackLetter
             </span>
           </div>
         )}
-        <h3 className="text-xl font-semibold text-center text-gray-900">
+        <h3 className="text-center text-xl font-semibold text-gray-900">
           {person.name}
         </h3>
         {person.subject && (
@@ -50,7 +50,7 @@ function PersonCard({ person, fallbackLetter }: { person: Person; fallbackLetter
         )}
       </div>
       <div className="text-center">
-        {person.email && <p className="text-sm text-gray-600 mb-3">{person.email}</p>}
+        {person.email && <p className="mb-3 text-sm text-muted">{person.email}</p>}
 
         {person.bio && <BioText text={person.bio} clampLines={5} />}
       </div>
@@ -89,7 +89,7 @@ export default async function FacultyStaffPage({
           <div className="flex gap-2">
             <a
               href="/teachers?section=faculty"
-              className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
+              className={`rounded-[var(--radius-md)] border px-4 py-2 text-sm font-medium transition-colors ${
                 activeSection === "faculty"
                   ? "bg-navy text-white border-navy"
                   : "bg-white text-gray-800 border-gray-200 hover:border-orange"
@@ -99,7 +99,7 @@ export default async function FacultyStaffPage({
             </a>
             <a
               href="/teachers?section=staff"
-              className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
+              className={`rounded-[var(--radius-md)] border px-4 py-2 text-sm font-medium transition-colors ${
                 activeSection === "staff"
                   ? "bg-navy text-white border-navy"
                   : "bg-white text-gray-800 border-gray-200 hover:border-orange"
@@ -127,8 +127,8 @@ export default async function FacultyStaffPage({
           </div>
 
           {list.length === 0 && (
-            <div className="bg-gray-50 p-10 rounded-lg text-center mt-6">
-              <p className="text-lg text-gray-600">
+            <div className="mt-6 rounded-[var(--radius-lg)] bg-gray-50 p-10 text-center">
+              <p className="text-lg text-muted">
                 {activeSection === "faculty"
                   ? "No faculty information has been registered yet."
                   : "No staff information has been registered yet."}
@@ -140,4 +140,3 @@ export default async function FacultyStaffPage({
     </MiddleHighHeroLayout>
   );
 }
-

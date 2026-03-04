@@ -39,7 +39,7 @@ export default function MiddleHighHeroLayout({
         {/* Background with blurred text effect */}
         <div className="absolute inset-0 overflow-hidden">
           <div
-            className="absolute right-0 top-1/2 -translate-y-1/2 text-[120px] md:text-[180px] lg:text-[220px] font-bold text-navy-200 opacity-20 blur-sm select-none"
+            className="absolute right-0 top-1/2 -translate-y-1/2 text-[80px] md:text-[120px] lg:text-[160px] font-bold text-navy-200 opacity-10 blur-[1px] select-none"
             style={{ fontFamily: "serif", fontStyle: "italic" }}
           >
             MIDDLE & HIGH SCHOOL
@@ -92,4 +92,3 @@ export default function MiddleHighHeroLayout({
     </div>
   );
 }
-
